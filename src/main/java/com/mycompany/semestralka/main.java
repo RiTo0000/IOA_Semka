@@ -21,6 +21,10 @@ public class main extends javax.swing.JFrame {
         
         this.app = new Application(); //vytvorenie instancie aplikacie
     }
+    
+    //Start moje metody
+
+    //End moje metody
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,21 +35,56 @@ public class main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanelMain = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1000, 800));
+        setResizable(false);
+
+        jPanelMain.setAlignmentX(0.0F);
+        jPanelMain.setAlignmentY(0.0F);
+        jPanelMain.setPreferredSize(new java.awt.Dimension(1000, 800));
+        jPanelMain.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanelMainMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelMainLayout = new javax.swing.GroupLayout(jPanelMain);
+        jPanelMain.setLayout(jPanelMainLayout);
+        jPanelMainLayout.setHorizontalGroup(
+            jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1000, Short.MAX_VALUE)
+        );
+        jPanelMainLayout.setVerticalGroup(
+            jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jPanelMainMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelMainMouseClicked
+        //mouse on click listener
+        int posX=evt.getX();
+        int posY=evt.getY();
+        
+        if (this.app.mouseClicked(posX, posY, jPanelMain))
+            repaint();   
+        
+        
+    }//GEN-LAST:event_jPanelMainMouseClicked
 
     /**
      * @param args the command line arguments
@@ -83,5 +122,6 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanelMain;
     // End of variables declaration//GEN-END:variables
 }
