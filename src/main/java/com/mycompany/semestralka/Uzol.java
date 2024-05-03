@@ -4,11 +4,18 @@
  */
 package com.mycompany.semestralka;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import javax.swing.JComponent;
+
 /**
  *
  * @author namer
  */
-public class Uzol {
+public class Uzol extends JComponent {
+    public final int defaultWidth = 20;
     /**
      * Nazov uzla
      */
@@ -22,9 +29,23 @@ public class Uzol {
      */
     private TypUzla typUzla;
     
-    public Uzol(String pNazov, TypUzla pTypUzla, double pKapacita) {
+    public Uzol(String pNazov, TypUzla pTypUzla, double pKapacita, int pX, int pY) {
         this.nazov = pNazov;
         this.typUzla = pTypUzla;
         this.kapacita = pKapacita;
+        
+        //potrebne pre jeho zobrazenie
+        setSize(new Dimension(defaultWidth, defaultWidth));
+        
+        setVisible(true); //nastavenie viditelnosti
+        setLocation(pX-defaultWidth/2, pY-defaultWidth/2); //nastavenie umiestnenia
+    }
+    
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+//        Graphics2D g2d = (Graphics2D) g;
+        g.setColor(Color.red);
+        g.fillOval(0, 0, defaultWidth, defaultWidth); //uvadzam poziciu vramci objektu preto zacinam na 0, 0
     }
 }
