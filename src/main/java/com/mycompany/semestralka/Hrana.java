@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.geom.Line2D;
 import javax.swing.JComponent;
 
 /**
@@ -22,6 +23,8 @@ public class Hrana extends JComponent {
     private boolean hranaPovolena;
     private Uzol pociatocnyUzol;
     private Uzol koncovyUzol;
+    
+    private Line2D.Double lineToDraw;
     
     public Hrana(boolean pHranaPovolena, Uzol pPociatocnyUzol, Uzol pKoncovyUzol) {
         this.hranaPovolena = pHranaPovolena;
@@ -49,12 +52,18 @@ public class Hrana extends JComponent {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.BLACK);
         g2d.setStroke(new BasicStroke(4f)); //sirka lajny
-        double posunX = Double.min(this.pociatocnyUzol.getCenter().getX(), this.koncovyUzol.getCenter().getX());
-        double posunY = Double.min(this.pociatocnyUzol.getCenter().getY(), this.koncovyUzol.getCenter().getY());
-        g2d.drawLine((int)(this.pociatocnyUzol.getCenter().getX() - posunX), //odkial X
-                (int)(this.pociatocnyUzol.getCenter().getY() - posunY), //odkial Y
-                (int)(this.koncovyUzol.getCenter().getX() - posunX), //kam X
-                (int)(this.koncovyUzol.getCenter().getY() - posunY)); //kam Y
+        g2d.draw(this.lineToDraw);
+    }
+    
+    /**
+     * Metoda sluzi na identifikaciu ci mys ukazuje na dany objekt
+     * @param x pozicia na osi X
+     * @param y pozicia na osi Y
+     * @return true ak mys ukazuje na komponent, false inak
+     */
+    @Override
+    public boolean contains(int x, int y) {
+        return this.lineToDraw.ptSegDist(x, y) < 5; // 
     }
     
     /**
@@ -65,11 +74,25 @@ public class Hrana extends JComponent {
         Point pocUzolCenter = this.pociatocnyUzol.getCenter();
         Point konUzolCenter = this.koncovyUzol.getCenter();
         //potrebne pre jeho zobrazenie
-        setSize(new Dimension((int)Math.abs(pocUzolCenter.getX() - konUzolCenter.getX()), 
-                                (int)Math.abs(pocUzolCenter.getY() - konUzolCenter.getY())));
+        setSize(new Dimension((int)Math.abs(pocUzolCenter.getX() - konUzolCenter.getX()),
+                                (int)Math.abs(pocUzolCenter.getY() - konUzolCenter.getY()))); //velkost je jeho boundingBox prakticky
 
         setVisible(true); //nastavenie viditelnosti
         setLocation((int)Double.min(pocUzolCenter.getX(), konUzolCenter.getX()), 
                     (int)Double.min(pocUzolCenter.getY(), konUzolCenter.getY())); //nastavujeme lavy horny roh
+        
+        calculateLine(); //ciaru si pripravim takto aby sa lahko vyhodnocovalo ci som blizko nej
+    }
+    
+    /**
+     * Metoda pre vypocitanie ciary medzi danymi bodmi
+     */
+    private void calculateLine() {
+        double posunX = Double.min(this.pociatocnyUzol.getCenter().getX(), this.koncovyUzol.getCenter().getX());
+        double posunY = Double.min(this.pociatocnyUzol.getCenter().getY(), this.koncovyUzol.getCenter().getY());
+        this.lineToDraw = new Line2D.Double((this.pociatocnyUzol.getCenter().getX() - posunX), //odkial X
+                (this.pociatocnyUzol.getCenter().getY() - posunY), //odkial Y
+                (this.koncovyUzol.getCenter().getX() - posunX), //kam X
+                (this.koncovyUzol.getCenter().getY() - posunY)); //kam Y
     }
 }

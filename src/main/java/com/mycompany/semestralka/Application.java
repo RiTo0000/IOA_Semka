@@ -109,6 +109,16 @@ public class Application {
                     //do nothing
                     return 0;
                 }
+            case editEdge:
+                try {
+                    edge = (Hrana)pMainPanel.getComponentAt(posX, posY);
+//                    this.setOtvorenyUzol(node);
+                    return 1;
+                    
+                } catch (ClassCastException e) {
+                    //do nothing
+                    return 0;
+                }
             default:
                 return 0;
         }
