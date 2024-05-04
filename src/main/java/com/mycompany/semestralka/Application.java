@@ -20,7 +20,7 @@ public class Application {
     
     public Application() {
         this.uzly = new ArrayList<>();
-        this.mode = Mode.addNode; //TODO malo by tam byt normalne view ako default
+        this.mode = Mode.view; //default mode je view
         
         this.otvorenyUzol = null;
     }
@@ -30,20 +30,44 @@ public class Application {
      * @param posX pozicia kliknutia mysi X
      * @param posY pozicia kliknutia mysi Y
      * @param pMainPanel hlavna obrazovka
-     * @return true ak treba prekreslit obrazovku
+     * @return  1 ak treba otvorit detail Uzla a repaint, 
+     *          2 ak treba iba repaint,
+     *          0 inak
      */
-    public boolean mouseClicked(int posX, int posY, JPanel pMainPanel) {
+    public int mouseClicked(int posX, int posY, JPanel pMainPanel) {
         Uzol node;
         switch (this.mode) {
             case addNode:
                 node = this.addNode(posX, posY);
                 pMainPanel.add(node);
-                return true;
-            case view:
-                node = (Uzol)pMainPanel.getComponentAt(posX, posY); //TODO kontrola na castovanie
-                return false;
+                this.setOtvorenyUzol(node);
+                return 1;
+            case editNode:
+                try {
+                    node = (Uzol)pMainPanel.getComponentAt(posX, posY);
+                    this.setOtvorenyUzol(node);
+                    return 1;
+                    
+                } catch (ClassCastException e) {
+                    //do nothing
+                    return 0;
+                }
+            case removeNode:
+                try {
+                    node = (Uzol)pMainPanel.getComponentAt(posX, posY);
+                    if (this.removeNode(node)) {
+                        pMainPanel.remove(node);
+                        return 2;
+                    }
+                    else
+                        return 0;
+                    
+                } catch (ClassCastException e) {
+                    //do nothing
+                    return 0;
+                }
             default:
-                return false;
+                return 0;
         }
     }
     
@@ -53,7 +77,7 @@ public class Application {
      * @param posY pozicia uzla Y
      * @return vrati vytvoreny uzol
      */
-    public Uzol addNode(int posX, int posY) {
+    private Uzol addNode(int posX, int posY) {
         //Pridanie samotneho uzla s default hodnotami
         Uzol node = new Uzol("", TypUzla.BezSpecifikacie, 0, posX, posY);
         this.uzly.add(node);
@@ -61,12 +85,13 @@ public class Application {
         return node;
     }
     
-    public void changeMode() { //TODO spravit tak aby bol vstupom mode na ktory to chceme zmenit
-        if (this.mode == Mode.addNode) {
-            this.mode = Mode.view;
-        }
-        else
-            this.mode = Mode.addNode;
+    /**
+     * Metoda pre odstranovanie uzlov zo siete
+     * @param pUzol uzol na odstranenie
+     * @return true ak sa odstranenie podarilo, false inak
+     */
+    private boolean removeNode(Uzol pUzol) {
+        return this.uzly.remove(pUzol);
     }
     
     //Gettre/Settre
@@ -102,5 +127,15 @@ public class Application {
     public void setOtvorenyUzol(Uzol otvorenyUzol) {
         this.otvorenyUzol = otvorenyUzol;
     }
+
+    /**
+     * Setter pre mod v ktorom sa aplikacia nachadza
+     * @param mode novy mod aplikacie
+     */
+    public void setMode(Mode mode) {
+        this.mode = mode;
+    }
+    
+    
         
 }

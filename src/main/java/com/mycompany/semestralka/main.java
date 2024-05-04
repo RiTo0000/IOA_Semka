@@ -31,19 +31,31 @@ public class main extends javax.swing.JFrame {
         this.jFrameNodeDetails.setLocationRelativeTo(null);
         //vytvorenie instancie aplikacie
         this.app = new Application(); 
+        this.setTitle(this.app.getMode().toString());
     }
     
-    public void openNodeDetailWindow(Uzol node) {
-        this.app.setOtvorenyUzol(node);
-        //nacitanie info do okna pre dany uzol
-        this.jTextFieldNodeDetailsNazov.setText(node.getName());
-        this.jTextFieldNodeDetailsKapacita.setText(Double.toString(node.getKapacita()));
-        this.jComboBoxNodeDetailsTypUzla.setSelectedItem(node.getTypUzla());
-        //nastavenie viditelnosti daneho okna
-        this.jFrameNodeDetails.setVisible(true);
-        this.jPanelNodeDetails.setVisible(true);
-        //deaktivujem main okno aby sa nedalo klikat tam ale aby bol focus na tom detaile
-        this.setEnabled(false);
+    public void openNodeDetailWindow() {
+        Uzol node = this.app.getOtvorenyUzol();
+        if (node != null) {//pokracujem len ak node ktory mam zobrazit nie je null
+            //nacitanie info do okna pre otvoreny uzol
+            this.jTextFieldNodeDetailsNazov.setText(node.getNazov());
+            this.jTextFieldNodeDetailsKapacita.setText(Double.toString(node.getKapacita()));
+            this.jComboBoxNodeDetailsTypUzla.setSelectedItem(node.getTypUzla());
+            //nastavenie viditelnosti daneho okna
+            this.jFrameNodeDetails.setVisible(true);
+            this.jPanelNodeDetails.setVisible(true);
+            //deaktivujem main okno aby sa nedalo klikat tam ale aby bol focus na tom detaile
+            this.setEnabled(false);
+        }
+    }
+    
+    /**
+     * Metoda pre zmenu modu aplikacie
+     * @param newMode novy mod
+     */
+    public void changeMode(Mode newMode) {
+        this.app.setMode(newMode);
+        this.setTitle(newMode.toString());
     }
     //End moje metody
 
@@ -64,9 +76,13 @@ public class main extends javax.swing.JFrame {
         jTextFieldNodeDetailsKapacita = new javax.swing.JTextField();
         jLabelNodeDetailsTypUzla = new javax.swing.JLabel();
         jComboBoxNodeDetailsTypUzla = new javax.swing.JComboBox<>();
-        jToolBarMain = new javax.swing.JToolBar();
-        jButtonChangeMode = new javax.swing.JButton();
         jPanelMain = new javax.swing.JPanel();
+        jMenuBarMain = new javax.swing.JMenuBar();
+        jMenuUzly = new javax.swing.JMenu();
+        jMenuItemUzlyPridavanie = new javax.swing.JMenuItem();
+        jMenuItemUzlyEditacia = new javax.swing.JMenuItem();
+        jMenuItemUzlyMazanie = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         jFrameNodeDetails.setAlwaysOnTop(true);
         jFrameNodeDetails.setMinimumSize(new java.awt.Dimension(400, 300));
@@ -143,27 +159,9 @@ public class main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jToolBarMain.setRollover(true);
-        jToolBarMain.setAlignmentX(0.0F);
-        jToolBarMain.setAlignmentY(0.0F);
-        jToolBarMain.setMaximumSize(new java.awt.Dimension(1000, 28));
-        jToolBarMain.setMinimumSize(new java.awt.Dimension(1000, 28));
-        jToolBarMain.setPreferredSize(new java.awt.Dimension(1000, 25));
-
-        jButtonChangeMode.setText("Zmena modu");
-        jButtonChangeMode.setFocusable(false);
-        jButtonChangeMode.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonChangeMode.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonChangeMode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonChangeModeActionPerformed(evt);
-            }
-        });
-        jToolBarMain.add(jButtonChangeMode);
-
         jPanelMain.setAlignmentX(0.0F);
         jPanelMain.setAlignmentY(10.0F);
-        jPanelMain.setPreferredSize(new java.awt.Dimension(1000, 700));
+        jPanelMain.setPreferredSize(new java.awt.Dimension(1000, 777));
         jPanelMain.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanelMainMouseClicked(evt);
@@ -178,27 +176,51 @@ public class main extends javax.swing.JFrame {
         );
         jPanelMainLayout.setVerticalGroup(
             jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 753, Short.MAX_VALUE)
+            .addGap(0, 777, Short.MAX_VALUE)
         );
+
+        jMenuUzly.setText("Uzly");
+
+        jMenuItemUzlyPridavanie.setLabel("Pridanie uzlov");
+        jMenuItemUzlyPridavanie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemUzlyPridavanieActionPerformed(evt);
+            }
+        });
+        jMenuUzly.add(jMenuItemUzlyPridavanie);
+
+        jMenuItemUzlyEditacia.setLabel("Editacia Uzlov");
+        jMenuItemUzlyEditacia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemUzlyEditaciaActionPerformed(evt);
+            }
+        });
+        jMenuUzly.add(jMenuItemUzlyEditacia);
+
+        jMenuItemUzlyMazanie.setLabel("Mazanie Uzlov");
+        jMenuItemUzlyMazanie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemUzlyMazanieActionPerformed(evt);
+            }
+        });
+        jMenuUzly.add(jMenuItemUzlyMazanie);
+
+        jMenuBarMain.add(jMenuUzly);
+
+        jMenu2.setText("Hrany");
+        jMenuBarMain.add(jMenu2);
+
+        setJMenuBar(jMenuBarMain);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, 1456, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jToolBarMain, javax.swing.GroupLayout.DEFAULT_SIZE, 1456, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jToolBarMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 775, Short.MAX_VALUE)))
+            .addComponent(jPanelMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -209,12 +231,17 @@ public class main extends javax.swing.JFrame {
         int posX=evt.getX();
         int posY=evt.getY();
         
-        if (this.app.mouseClicked(posX, posY, jPanelMain)) {  
-            repaint();
-            this.openNodeDetailWindow(this.app.getUzly().get(this.app.getUzly().size()-1)); //zobrazi posledny uzol
-
-        }
-        
+        switch (this.app.mouseClicked(posX, posY, jPanelMain)) {
+            case 1:
+                repaint();
+                this.openNodeDetailWindow(); //zobrazi uzol ktory je v this.app.otvorenyUzol
+                break;
+            case 2:
+                repaint();
+                break;
+            default:
+                //do nothing
+        }       
         
     }//GEN-LAST:event_jPanelMainMouseClicked
 
@@ -234,9 +261,17 @@ public class main extends javax.swing.JFrame {
         this.setEnabled(true);
     }//GEN-LAST:event_jFrameNodeDetailsWindowClosing
 
-    private void jButtonChangeModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChangeModeActionPerformed
-        this.app.changeMode();
-    }//GEN-LAST:event_jButtonChangeModeActionPerformed
+    private void jMenuItemUzlyPridavanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUzlyPridavanieActionPerformed
+        this.changeMode(Mode.addNode); //pridavanie uzlov
+    }//GEN-LAST:event_jMenuItemUzlyPridavanieActionPerformed
+
+    private void jMenuItemUzlyEditaciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUzlyEditaciaActionPerformed
+        this.changeMode(Mode.editNode); //editacia uzlov
+    }//GEN-LAST:event_jMenuItemUzlyEditaciaActionPerformed
+
+    private void jMenuItemUzlyMazanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUzlyMazanieActionPerformed
+        this.changeMode(Mode.removeNode); //mazanie uzlov
+    }//GEN-LAST:event_jMenuItemUzlyMazanieActionPerformed
 
     /**
      * @param args the command line arguments
@@ -274,16 +309,20 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonChangeMode;
     private javax.swing.JComboBox<TypUzla> jComboBoxNodeDetailsTypUzla;
     private javax.swing.JFrame jFrameNodeDetails;
     private javax.swing.JLabel jLabelNodeDetailsKapacita;
     private javax.swing.JLabel jLabelNodeDetailsNazov;
     private javax.swing.JLabel jLabelNodeDetailsTypUzla;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBarMain;
+    private javax.swing.JMenuItem jMenuItemUzlyEditacia;
+    private javax.swing.JMenuItem jMenuItemUzlyMazanie;
+    private javax.swing.JMenuItem jMenuItemUzlyPridavanie;
+    private javax.swing.JMenu jMenuUzly;
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JPanel jPanelNodeDetails;
     private javax.swing.JTextField jTextFieldNodeDetailsKapacita;
     private javax.swing.JTextField jTextFieldNodeDetailsNazov;
-    private javax.swing.JToolBar jToolBarMain;
     // End of variables declaration//GEN-END:variables
 }

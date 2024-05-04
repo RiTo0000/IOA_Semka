@@ -10,5 +10,23 @@ package com.mycompany.semestralka;
  */
 public enum Mode {
     addNode,
-    view
+    editNode,
+    removeNode,
+    view;
+    
+    @Override
+    public String toString() {
+        switch (this) {
+            case addNode:
+                return "Mod pridavania uzlov";
+            case editNode:
+                return "Mod editacie uzlov";
+            case removeNode:
+                return "Mod mazania uzlov";
+            case view:
+                return "Mod prehliadania siete";
+            default:
+                return "Neznamy mod";
+        }
+    }
 }
