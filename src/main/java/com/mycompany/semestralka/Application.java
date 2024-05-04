@@ -4,7 +4,6 @@
  */
 package com.mycompany.semestralka;
 
-import java.awt.Container;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
@@ -17,9 +16,13 @@ public class Application {
     private ArrayList<Uzol> uzly;
     private Mode mode;
     
+    private Uzol otvorenyUzol;
+    
     public Application() {
         this.uzly = new ArrayList<>();
         this.mode = Mode.addNode; //TODO malo by tam byt normalne view ako default
+        
+        this.otvorenyUzol = null;
     }
     
     /**
@@ -64,9 +67,31 @@ public class Application {
     public ArrayList<Uzol> getUzly() {
         return this.uzly;
     }
-
+    
+    /**
+     * Getter pre mod v ktorom sa aplikacia nachadza
+     * @return aktualny mod aplikacie
+     */
     public Mode getMode() {
         return this.mode;
     }
     
+    /**
+     * Getter pre prave otvoreny uzol
+     * @return prave otvoreny uzol
+     */
+    public Uzol getOtvorenyUzol() {
+        return this.otvorenyUzol;
+    }
+    
+    /**
+     * Setter pre prave otvoreny uzol
+     * @param otvorenyUzol prave otvoreny uzol
+     */
+    public void setOtvorenyUzol(Uzol otvorenyUzol) {
+        this.otvorenyUzol = otvorenyUzol;
+    }
+    
+    
+        
 }

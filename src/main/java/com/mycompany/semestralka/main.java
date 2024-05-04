@@ -19,11 +19,27 @@ public class main extends javax.swing.JFrame {
     public main() {
         initComponents();
         
-        this.app = new Application(); //vytvorenie instancie aplikacie
+        this.initApp();
     }
     
     //Start moje metody
-
+    private void initApp() {
+        //nastavi zobrazovanie okien na stred obrazovky
+        this.setLocationRelativeTo(null); 
+        this.jFrameNodeDetails.setLocationRelativeTo(null);
+        //vytvorenie instancie aplikacie
+        this.app = new Application(); 
+    }
+    
+    public void openNodeDetailWindow(Uzol node) {
+        this.app.setOtvorenyUzol(node);
+        //TODO nacitanie info do okna pre dany uzol
+        this.jTextFieldNodeDetailsNazov.setText(node.getName());
+        this.jFrameNodeDetails.setVisible(true);
+        this.jPanelNodeDetails.setVisible(true);
+        //deaktivujem main okno aby sa nedalo klikat tam ale aby bol focus na tom detaile
+        this.setEnabled(false);
+    }
     //End moje metody
 
     /**
@@ -35,10 +51,57 @@ public class main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFrameNodeDetails = new javax.swing.JFrame();
+        jPanelNodeDetails = new javax.swing.JPanel();
+        jLabelNodeDetailsNazov = new javax.swing.JLabel();
+        jTextFieldNodeDetailsNazov = new javax.swing.JTextField();
         jPanelMain = new javax.swing.JPanel();
 
+        jFrameNodeDetails.setAlwaysOnTop(true);
+        jFrameNodeDetails.setMinimumSize(new java.awt.Dimension(400, 300));
+        jFrameNodeDetails.setResizable(false);
+        jFrameNodeDetails.setType(java.awt.Window.Type.POPUP);
+        jFrameNodeDetails.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                jFrameNodeDetailsWindowClosing(evt);
+            }
+        });
+
+        jLabelNodeDetailsNazov.setText("Nazov");
+
+        javax.swing.GroupLayout jPanelNodeDetailsLayout = new javax.swing.GroupLayout(jPanelNodeDetails);
+        jPanelNodeDetails.setLayout(jPanelNodeDetailsLayout);
+        jPanelNodeDetailsLayout.setHorizontalGroup(
+            jPanelNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelNodeDetailsLayout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(jLabelNodeDetailsNazov)
+                .addGap(26, 26, 26)
+                .addComponent(jTextFieldNodeDetailsNazov, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(163, Short.MAX_VALUE))
+        );
+        jPanelNodeDetailsLayout.setVerticalGroup(
+            jPanelNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelNodeDetailsLayout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addGroup(jPanelNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelNodeDetailsNazov)
+                    .addComponent(jTextFieldNodeDetailsNazov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(226, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jFrameNodeDetailsLayout = new javax.swing.GroupLayout(jFrameNodeDetails.getContentPane());
+        jFrameNodeDetails.getContentPane().setLayout(jFrameNodeDetailsLayout);
+        jFrameNodeDetailsLayout.setHorizontalGroup(
+            jFrameNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanelNodeDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jFrameNodeDetailsLayout.setVerticalGroup(
+            jFrameNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanelNodeDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 800));
         setResizable(false);
 
         jPanelMain.setAlignmentX(0.0F);
@@ -80,11 +143,24 @@ public class main extends javax.swing.JFrame {
         int posX=evt.getX();
         int posY=evt.getY();
         
-        if (this.app.mouseClicked(posX, posY, jPanelMain))
-            repaint();   
+        if (this.app.mouseClicked(posX, posY, jPanelMain)) {  
+            repaint();
+            this.openNodeDetailWindow(this.app.getUzly().get(this.app.getUzly().size()-1)); //zobrazi posledny uzol
+
+        }
         
         
     }//GEN-LAST:event_jPanelMainMouseClicked
+
+    private void jFrameNodeDetailsWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jFrameNodeDetailsWindowClosing
+        Uzol otvorenyUzol = this.app.getOtvorenyUzol();
+        // nastavime hodnoty z obrazovky
+        otvorenyUzol.setName(this.jTextFieldNodeDetailsNazov.getText());
+        
+        // nastavime otvoreny uzol na null
+        this.app.setOtvorenyUzol(null);
+        this.setEnabled(true);
+    }//GEN-LAST:event_jFrameNodeDetailsWindowClosing
 
     /**
      * @param args the command line arguments
@@ -122,6 +198,10 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFrame jFrameNodeDetails;
+    private javax.swing.JLabel jLabelNodeDetailsNazov;
     private javax.swing.JPanel jPanelMain;
+    private javax.swing.JPanel jPanelNodeDetails;
+    private javax.swing.JTextField jTextFieldNodeDetailsNazov;
     // End of variables declaration//GEN-END:variables
 }
