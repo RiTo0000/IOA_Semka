@@ -39,6 +39,9 @@ public class Application {
                 node = this.addNode(posX, posY);
                 pMainPanel.add(node);
                 return true;
+            case view:
+                node = (Uzol)pMainPanel.getComponentAt(posX, posY); //TODO kontrola na castovanie
+                return false;
             default:
                 return false;
         }
@@ -56,6 +59,14 @@ public class Application {
         this.uzly.add(node);
         
         return node;
+    }
+    
+    public void changeMode() { //TODO spravit tak aby bol vstupom mode na ktory to chceme zmenit
+        if (this.mode == Mode.addNode) {
+            this.mode = Mode.view;
+        }
+        else
+            this.mode = Mode.addNode;
     }
     
     //Gettre/Settre
@@ -91,7 +102,5 @@ public class Application {
     public void setOtvorenyUzol(Uzol otvorenyUzol) {
         this.otvorenyUzol = otvorenyUzol;
     }
-    
-    
         
 }

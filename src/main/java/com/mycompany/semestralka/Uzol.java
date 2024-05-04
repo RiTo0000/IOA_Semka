@@ -48,4 +48,30 @@ public class Uzol extends JComponent {
         g.setColor(Color.red);
         g.fillOval(0, 0, defaultWidth, defaultWidth); //uvadzam poziciu vramci objektu preto zacinam na 0, 0
     }
+
+    public String getNazov() {
+        return this.nazov;
+    }
+
+    public void setNazov(String nazov) {
+        this.nazov = nazov;
+    }
+
+    public double getKapacita() {
+        return this.kapacita;
+    }
+
+    public void setKapacita(double kapacita) {
+        this.kapacita = kapacita;
+    }
+
+    public TypUzla getTypUzla() {
+        return this.typUzla;
+    }
+
+    public void setTypUzla(TypUzla typUzla) {
+        this.typUzla = typUzla;
+    }
+    
+    
 }
