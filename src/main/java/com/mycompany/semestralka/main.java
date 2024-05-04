@@ -29,6 +29,7 @@ public class main extends javax.swing.JFrame {
         //nastavi zobrazovanie okien na stred obrazovky
         this.setLocationRelativeTo(null); 
         this.jFrameNodeDetails.setLocationRelativeTo(null);
+        this.jFrameEdgeDetails.setLocationRelativeTo(null);
         //vytvorenie instancie aplikacie
         this.app = new Application(); 
         this.setTitle(this.app.getMode().toString());
@@ -44,6 +45,20 @@ public class main extends javax.swing.JFrame {
             //nastavenie viditelnosti daneho okna
             this.jFrameNodeDetails.setVisible(true);
             this.jPanelNodeDetails.setVisible(true);
+            //deaktivujem main okno aby sa nedalo klikat tam ale aby bol focus na tom detaile
+            this.setEnabled(false);
+        }
+    }
+    
+    public void openEdgeDetailWindow() {
+        Hrana edge = this.app.getOtvorenaHrana();
+        if (edge != null) {//pokracujem len ak edge ktory mam zobrazit nie je null
+            //nacitanie info do okna pre otvorenu hranu
+            this.jTextFieldEdgeDetailsDlzka.setText(Double.toString(edge.getDlzkaTrasy()));
+            this.jCheckBoxEdgeDetailsPovolenieHrany.setSelected(edge.isHranaPovolena());
+            //nastavenie viditelnosti daneho okna
+            this.jFrameEdgeDetails.setVisible(true);
+            this.jPanelEdgeDetails.setVisible(true);
             //deaktivujem main okno aby sa nedalo klikat tam ale aby bol focus na tom detaile
             this.setEnabled(false);
         }
@@ -76,6 +91,13 @@ public class main extends javax.swing.JFrame {
         jTextFieldNodeDetailsKapacita = new javax.swing.JTextField();
         jLabelNodeDetailsTypUzla = new javax.swing.JLabel();
         jComboBoxNodeDetailsTypUzla = new javax.swing.JComboBox<>();
+        jFrameEdgeDetails = new javax.swing.JFrame();
+        jPanelEdgeDetails = new javax.swing.JPanel();
+        jLabelEdgeDetailsDlzka = new javax.swing.JLabel();
+        jTextFieldEdgeDetailsDlzka = new javax.swing.JTextField();
+        jLabelEdgeDetailsPovolenieHrany = new javax.swing.JLabel();
+        jCheckBoxEdgeDetailsPovolenieHrany = new javax.swing.JCheckBox();
+        jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasy = new javax.swing.JButton();
         jPanelMain = new javax.swing.JPanel();
         jMenuBarMain = new javax.swing.JMenuBar();
         jMenuUzly = new javax.swing.JMenu();
@@ -157,6 +179,79 @@ public class main extends javax.swing.JFrame {
         jFrameNodeDetailsLayout.setVerticalGroup(
             jFrameNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanelNodeDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jFrameEdgeDetails.setAlwaysOnTop(true);
+        jFrameEdgeDetails.setMinimumSize(new java.awt.Dimension(400, 300));
+        jFrameEdgeDetails.setResizable(false);
+        jFrameEdgeDetails.setType(java.awt.Window.Type.POPUP);
+        jFrameEdgeDetails.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                jFrameEdgeDetailsWindowClosing(evt);
+            }
+        });
+
+        jLabelEdgeDetailsDlzka.setText("Dlzka trasy");
+
+        jTextFieldEdgeDetailsDlzka.setMinimumSize(new java.awt.Dimension(200, 22));
+        jTextFieldEdgeDetailsDlzka.setPreferredSize(new java.awt.Dimension(200, 22));
+
+        jLabelEdgeDetailsPovolenieHrany.setText("Povolenie hrany");
+
+        jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasy.setText("Automaticky vypocitat dlzku trasy");
+        jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasyActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelEdgeDetailsLayout = new javax.swing.GroupLayout(jPanelEdgeDetails);
+        jPanelEdgeDetails.setLayout(jPanelEdgeDetailsLayout);
+        jPanelEdgeDetailsLayout.setHorizontalGroup(
+            jPanelEdgeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelEdgeDetailsLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(jPanelEdgeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelEdgeDetailsPovolenieHrany)
+                    .addComponent(jLabelEdgeDetailsDlzka, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(26, 26, 26)
+                .addGroup(jPanelEdgeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelEdgeDetailsLayout.createSequentialGroup()
+                        .addComponent(jTextFieldEdgeDetailsDlzka, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(47, Short.MAX_VALUE))
+                    .addGroup(jPanelEdgeDetailsLayout.createSequentialGroup()
+                        .addComponent(jCheckBoxEdgeDetailsPovolenieHrany)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(jPanelEdgeDetailsLayout.createSequentialGroup()
+                .addGap(92, 92, 92)
+                .addComponent(jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasy)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanelEdgeDetailsLayout.setVerticalGroup(
+            jPanelEdgeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelEdgeDetailsLayout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addGroup(jPanelEdgeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelEdgeDetailsDlzka)
+                    .addComponent(jTextFieldEdgeDetailsDlzka, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(jPanelEdgeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelEdgeDetailsPovolenieHrany)
+                    .addComponent(jCheckBoxEdgeDetailsPovolenieHrany))
+                .addGap(31, 31, 31)
+                .addComponent(jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasy)
+                .addContainerGap(72, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jFrameEdgeDetailsLayout = new javax.swing.GroupLayout(jFrameEdgeDetails.getContentPane());
+        jFrameEdgeDetails.getContentPane().setLayout(jFrameEdgeDetailsLayout);
+        jFrameEdgeDetailsLayout.setHorizontalGroup(
+            jFrameEdgeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanelEdgeDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jFrameEdgeDetailsLayout.setVerticalGroup(
+            jFrameEdgeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanelEdgeDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -267,6 +362,10 @@ public class main extends javax.swing.JFrame {
             case 2:
                 repaint();
                 break;
+            case 3:
+                repaint();
+                this.openEdgeDetailWindow();//zobrazi hranu ktora je v this.app.otvorenaHrana
+                break;
             default:
                 //do nothing
         }       
@@ -313,6 +412,27 @@ public class main extends javax.swing.JFrame {
         this.changeMode(Mode.removeEdge);
     }//GEN-LAST:event_jMenuItemHranyMazanieActionPerformed
 
+    private void jFrameEdgeDetailsWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_jFrameEdgeDetailsWindowClosing
+        Hrana otvorenaHrana = this.app.getOtvorenaHrana();
+        // nastavime hodnoty z obrazovky
+        try {
+            otvorenaHrana.setDlzkaTrasy(Double.parseDouble(this.jTextFieldEdgeDetailsDlzka.getText()));
+        } catch (NumberFormatException e) {
+            //Do nothing
+        }
+        otvorenaHrana.setHranaPovolena(this.jCheckBoxEdgeDetailsPovolenieHrany.isSelected());
+        
+        // nastavime otvorenu hranu na null
+        this.app.setOtvorenaHrana(null);
+        this.setEnabled(true);
+    }//GEN-LAST:event_jFrameEdgeDetailsWindowClosing
+
+    private void jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasyActionPerformed
+        Hrana edge = this.app.getOtvorenaHrana();
+        edge.autoCalculateLength();
+        this.jTextFieldEdgeDetailsDlzka.setText(Double.toString(edge.getDlzkaTrasy()));
+    }//GEN-LAST:event_jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasyActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -349,8 +469,13 @@ public class main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasy;
+    private javax.swing.JCheckBox jCheckBoxEdgeDetailsPovolenieHrany;
     private javax.swing.JComboBox<TypUzla> jComboBoxNodeDetailsTypUzla;
+    private javax.swing.JFrame jFrameEdgeDetails;
     private javax.swing.JFrame jFrameNodeDetails;
+    private javax.swing.JLabel jLabelEdgeDetailsDlzka;
+    private javax.swing.JLabel jLabelEdgeDetailsPovolenieHrany;
     private javax.swing.JLabel jLabelNodeDetailsKapacita;
     private javax.swing.JLabel jLabelNodeDetailsNazov;
     private javax.swing.JLabel jLabelNodeDetailsTypUzla;
@@ -363,8 +488,10 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemUzlyMazanie;
     private javax.swing.JMenuItem jMenuItemUzlyPridavanie;
     private javax.swing.JMenu jMenuUzly;
+    private javax.swing.JPanel jPanelEdgeDetails;
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JPanel jPanelNodeDetails;
+    private javax.swing.JTextField jTextFieldEdgeDetailsDlzka;
     private javax.swing.JTextField jTextFieldNodeDetailsKapacita;
     private javax.swing.JTextField jTextFieldNodeDetailsNazov;
     // End of variables declaration//GEN-END:variables

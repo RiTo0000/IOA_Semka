@@ -21,6 +21,10 @@ public class Application {
      * Prave otvoreny uzol
      */
     private Uzol otvorenyUzol;
+    /**
+     * Prave otvorena hrana
+     */
+    private Hrana otvorenaHrana;
     
     /**
      * Pociatocny uzol novovytvaranej hrany
@@ -37,6 +41,7 @@ public class Application {
         this.mode = Mode.view; //default mode je view
         
         this.otvorenyUzol = null;
+        this.otvorenaHrana = null;
     }
     
     /**
@@ -46,6 +51,7 @@ public class Application {
      * @param pMainPanel hlavna obrazovka
      * @return  1 ak treba otvorit detail Uzla a repaint, 
      *          2 ak treba iba repaint,
+     *          3 ak treba otvorit detail Hrany a repaint,
      *          0 inak
      */
     public int mouseClicked(int posX, int posY, JPanel pMainPanel) {
@@ -96,12 +102,13 @@ public class Application {
                         //vytvorit hranu
                         edge = this.addEdge();
                         pMainPanel.add(edge);
+                        this.setOtvorenaHrana(edge);
                         //vycistit pociatocny a koncovy uzol hrany
                         this.pocUzolHrany.setSelected(false);
                         this.pocUzolHrany = null;
                         this.konUzolHrany.setSelected(false);
                         this.konUzolHrany = null;
-                        return 2;
+                        return 3;
                     }
                     return 0;
                     
@@ -112,8 +119,22 @@ public class Application {
             case editEdge:
                 try {
                     edge = (Hrana)pMainPanel.getComponentAt(posX, posY);
-//                    this.setOtvorenyUzol(node);
-                    return 1;
+                    this.setOtvorenaHrana(edge);
+                    return 3;
+                    
+                } catch (ClassCastException e) {
+                    //do nothing
+                    return 0;
+                }
+            case removeEdge:
+                try {
+                    edge = (Hrana)pMainPanel.getComponentAt(posX, posY);
+                    if (this.removeEdge(edge)) {
+                        pMainPanel.remove(edge);
+                        return 2;
+                    }
+                    else
+                        return 0;
                     
                 } catch (ClassCastException e) {
                     //do nothing
@@ -140,18 +161,41 @@ public class Application {
     
     /**
      * Metoda pre odstranovanie uzlov zo siete
+     * odstranovany uzol nesmie mat hrany
      * @param pUzol uzol na odstranenie
      * @return true ak sa odstranenie podarilo, false inak
      */
     private boolean removeNode(Uzol pUzol) {
-        return this.uzly.remove(pUzol);
+        if (pUzol.getHrany().isEmpty()) { //uzol nesmie mat hrany ak ma byt vymazany
+            return this.uzly.remove(pUzol);
+        }
+        return false;
     }
     
     private Hrana addEdge() {
         Hrana edge = new Hrana(true, this.pocUzolHrany, this.konUzolHrany);
         this.hrany.add(edge);
         
+        //Hranu pridam k uzlom ako incidentnu
+        this.pocUzolHrany.addHrana(edge);
+        this.konUzolHrany.addHrana(edge);
+        
         return edge;
+    }
+    
+    /**
+     * Metoda pre odstranovanie hran zo siete
+     * odstranovana hrana sa bezpecne odstrani aj so zoznamov z uzlov
+     * @param pHrana hrana na odstranenie
+     * @return true ak sa odstranenie podarilo, false inak
+     */
+    private boolean removeEdge(Hrana pHrana) {
+        if (this.hrany.remove(pHrana)) {
+            pHrana.getPociatocnyUzol().getHrany().remove(pHrana);
+            pHrana.getKoncovyUzol().getHrany().remove(pHrana);
+            return true;
+        }
+        return false;           
     }
     
     //Gettre/Settre
@@ -190,10 +234,30 @@ public class Application {
 
     /**
      * Setter pre mod v ktorom sa aplikacia nachadza
+     * zmena modu zresetuje nastavene vrcholy pre tvorbu hrany 
      * @param mode novy mod aplikacie
      */
     public void setMode(Mode mode) {
+        this.pocUzolHrany = null;
+        this.konUzolHrany = null;
+        //nastavenie samotneho modu
         this.mode = mode;
+    }
+
+    /**
+     * Getter pre prave otvorenu hranu
+     * @return prave otvorena hrana
+     */
+    public Hrana getOtvorenaHrana() {
+        return this.otvorenaHrana;
+    }
+    
+    /**
+     * Setter pre prave otvorenu hranu
+     * @param otvorenaHrana prave otvorena hrana
+     */
+    public void setOtvorenaHrana(Hrana otvorenaHrana) {
+        this.otvorenaHrana = otvorenaHrana;
     }
     
     

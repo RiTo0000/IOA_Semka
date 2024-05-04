@@ -95,4 +95,56 @@ public class Hrana extends JComponent {
                 (this.koncovyUzol.getCenter().getX() - posunX), //kam X
                 (this.koncovyUzol.getCenter().getY() - posunY)); //kam Y
     }
+    
+    /**
+     * Getter pre dlzku trasy
+     * @return dlzka trasy
+     */
+    public double getDlzkaTrasy() {
+        return this.dlzkaTrasy;
+    }
+    
+    /**
+     * Setter pre dlzku trasy
+     * @param dlzkaTrasy nova dlzka trasy
+     */
+    public void setDlzkaTrasy(double dlzkaTrasy) {
+        this.dlzkaTrasy = dlzkaTrasy;
+    }
+    
+    /**
+     * Getter pre info ci je hrana povolena
+     * @return true ak je hrana povolena, false inak
+     */
+    public boolean isHranaPovolena() {
+        return this.hranaPovolena;
+    }
+
+    /**
+     * Setter pre info ci je hrana povolena
+     * @param hranaPovolena nova hodnota pre info ci je hrana povolena
+     */
+    public void setHranaPovolena(boolean hranaPovolena) {
+        this.hranaPovolena = hranaPovolena;
+    }
+    
+    /**
+     * Getter pre pociatocny uzol hrany
+     * @return pociatocny uzol hrany
+     */
+    public Uzol getPociatocnyUzol() {
+        return this.pociatocnyUzol;
+    }
+
+    /**
+     * Getter pre koncovy uzol hrany
+     * @return koncovy uzol hrany
+     */
+    public Uzol getKoncovyUzol() {
+        return this.koncovyUzol;
+    }
+    
+    
+    
+    
 }

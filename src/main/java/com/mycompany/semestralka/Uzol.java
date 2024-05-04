@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
 import javax.swing.JComponent;
 
 /**
@@ -35,10 +36,16 @@ public class Uzol extends JComponent {
      */
     private boolean selected;
     
+    /**
+     * Hrany ktore su napojene na tento uzol
+     */
+    private ArrayList<Hrana> hrany;
+    
     public Uzol(String pNazov, TypUzla pTypUzla, double pKapacita, int pX, int pY) {
         this.nazov = pNazov;
         this.typUzla = pTypUzla;
         this.kapacita = pKapacita;
+        this.hrany = new ArrayList<>();
         
         //potrebne pre jeho zobrazenie
         setSize(new Dimension(defaultWidth, defaultWidth));
@@ -89,6 +96,22 @@ public class Uzol extends JComponent {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+    
+    /**
+     * Getter pre hrany napojene na tento uzol
+     * @return hrany napojene na tento uzol
+     */
+    public ArrayList<Hrana> getHrany() {
+        return this.hrany;
+    }
+    
+    /**
+     * Metoda pre pridanie hrany
+     * @param hrana hrana na pridanie
+     */
+    public void addHrana(Hrana hrana) {
+        this.hrany.add(hrana);
     }
     
     
