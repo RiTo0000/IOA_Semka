@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import javax.swing.JComponent;
 
 /**
@@ -29,6 +30,11 @@ public class Uzol extends JComponent {
      */
     private TypUzla typUzla;
     
+    /**
+     * Priznak oznaceneho uzla
+     */
+    private boolean selected;
+    
     public Uzol(String pNazov, TypUzla pTypUzla, double pKapacita, int pX, int pY) {
         this.nazov = pNazov;
         this.typUzla = pTypUzla;
@@ -45,7 +51,7 @@ public class Uzol extends JComponent {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 //        Graphics2D g2d = (Graphics2D) g;
-        g.setColor(Color.red);
+        g.setColor(Common.getNodeColor(this));
         g.fillOval(0, 0, defaultWidth, defaultWidth); //uvadzam poziciu vramci objektu preto zacinam na 0, 0
     }
 
@@ -72,6 +78,19 @@ public class Uzol extends JComponent {
     public void setTypUzla(TypUzla typUzla) {
         this.typUzla = typUzla;
     }
+    
+    public Point getCenter() {
+        return new Point(this.getX()+defaultWidth/2, this.getY()+defaultWidth/2);
+    }
+
+    public boolean isSelected() {
+        return this.selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+    
     
     
 }

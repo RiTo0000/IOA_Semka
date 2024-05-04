@@ -82,7 +82,10 @@ public class main extends javax.swing.JFrame {
         jMenuItemUzlyPridavanie = new javax.swing.JMenuItem();
         jMenuItemUzlyEditacia = new javax.swing.JMenuItem();
         jMenuItemUzlyMazanie = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        jMenuHrany = new javax.swing.JMenu();
+        jMenuItemHranyPridavanie = new javax.swing.JMenuItem();
+        jMenuItemHranyEditacia = new javax.swing.JMenuItem();
+        jMenuItemHranyMazanie = new javax.swing.JMenuItem();
 
         jFrameNodeDetails.setAlwaysOnTop(true);
         jFrameNodeDetails.setMinimumSize(new java.awt.Dimension(400, 300));
@@ -207,8 +210,33 @@ public class main extends javax.swing.JFrame {
 
         jMenuBarMain.add(jMenuUzly);
 
-        jMenu2.setText("Hrany");
-        jMenuBarMain.add(jMenu2);
+        jMenuHrany.setText("Hrany");
+
+        jMenuItemHranyPridavanie.setText("Pridanie hran");
+        jMenuItemHranyPridavanie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemHranyPridavanieActionPerformed(evt);
+            }
+        });
+        jMenuHrany.add(jMenuItemHranyPridavanie);
+
+        jMenuItemHranyEditacia.setText("Editacia hran");
+        jMenuItemHranyEditacia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemHranyEditaciaActionPerformed(evt);
+            }
+        });
+        jMenuHrany.add(jMenuItemHranyEditacia);
+
+        jMenuItemHranyMazanie.setText("Mazanie hran");
+        jMenuItemHranyMazanie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemHranyMazanieActionPerformed(evt);
+            }
+        });
+        jMenuHrany.add(jMenuItemHranyMazanie);
+
+        jMenuBarMain.add(jMenuHrany);
 
         setJMenuBar(jMenuBarMain);
 
@@ -273,6 +301,18 @@ public class main extends javax.swing.JFrame {
         this.changeMode(Mode.removeNode); //mazanie uzlov
     }//GEN-LAST:event_jMenuItemUzlyMazanieActionPerformed
 
+    private void jMenuItemHranyPridavanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemHranyPridavanieActionPerformed
+        this.changeMode(Mode.addEdge);
+    }//GEN-LAST:event_jMenuItemHranyPridavanieActionPerformed
+
+    private void jMenuItemHranyEditaciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemHranyEditaciaActionPerformed
+        this.changeMode(Mode.editEdge);
+    }//GEN-LAST:event_jMenuItemHranyEditaciaActionPerformed
+
+    private void jMenuItemHranyMazanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemHranyMazanieActionPerformed
+        this.changeMode(Mode.removeEdge);
+    }//GEN-LAST:event_jMenuItemHranyMazanieActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -314,8 +354,11 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNodeDetailsKapacita;
     private javax.swing.JLabel jLabelNodeDetailsNazov;
     private javax.swing.JLabel jLabelNodeDetailsTypUzla;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBarMain;
+    private javax.swing.JMenu jMenuHrany;
+    private javax.swing.JMenuItem jMenuItemHranyEditacia;
+    private javax.swing.JMenuItem jMenuItemHranyMazanie;
+    private javax.swing.JMenuItem jMenuItemHranyPridavanie;
     private javax.swing.JMenuItem jMenuItemUzlyEditacia;
     private javax.swing.JMenuItem jMenuItemUzlyMazanie;
     private javax.swing.JMenuItem jMenuItemUzlyPridavanie;

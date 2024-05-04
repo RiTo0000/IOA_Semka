@@ -12,6 +12,9 @@ public enum Mode {
     addNode,
     editNode,
     removeNode,
+    addEdge,
+    editEdge,
+    removeEdge,
     view;
     
     @Override
@@ -23,6 +26,12 @@ public enum Mode {
                 return "Mod editacie uzlov";
             case removeNode:
                 return "Mod mazania uzlov";
+            case addEdge:
+                return "Mod pridavania hran";
+            case editEdge:
+                return "Mod editacie hran";
+            case removeEdge:
+                return "Mod mazania hran";
             case view:
                 return "Mod prehliadania siete";
             default:

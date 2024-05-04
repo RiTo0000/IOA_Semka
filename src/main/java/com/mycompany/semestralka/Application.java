@@ -14,12 +14,26 @@ import javax.swing.JPanel;
 public class Application {
     
     private ArrayList<Uzol> uzly;
+    private ArrayList<Hrana> hrany;
     private Mode mode;
     
+    /**
+     * Prave otvoreny uzol
+     */
     private Uzol otvorenyUzol;
+    
+    /**
+     * Pociatocny uzol novovytvaranej hrany
+     */
+    private Uzol pocUzolHrany;
+    /**
+     * Koncovy uzol novovytvaranej hrany
+     */
+    private Uzol konUzolHrany;
     
     public Application() {
         this.uzly = new ArrayList<>();
+        this.hrany = new ArrayList<>();
         this.mode = Mode.view; //default mode je view
         
         this.otvorenyUzol = null;
@@ -36,6 +50,8 @@ public class Application {
      */
     public int mouseClicked(int posX, int posY, JPanel pMainPanel) {
         Uzol node;
+        Hrana edge;
+        
         switch (this.mode) {
             case addNode:
                 node = this.addNode(posX, posY);
@@ -61,6 +77,33 @@ public class Application {
                     }
                     else
                         return 0;
+                    
+                } catch (ClassCastException e) {
+                    //do nothing
+                    return 0;
+                }
+            case addEdge:
+                try {
+                    node = (Uzol)pMainPanel.getComponentAt(posX, posY);
+                    if (this.pocUzolHrany == null) {
+                        this.pocUzolHrany = node;
+                        this.pocUzolHrany.setSelected(true);
+                        return 2;
+                    }
+                    else if (this.konUzolHrany == null) {
+                        this.konUzolHrany = node;
+                        this.konUzolHrany.setSelected(true);
+                        //vytvorit hranu
+                        edge = this.addEdge();
+                        pMainPanel.add(edge);
+                        //vycistit pociatocny a koncovy uzol hrany
+                        this.pocUzolHrany.setSelected(false);
+                        this.pocUzolHrany = null;
+                        this.konUzolHrany.setSelected(false);
+                        this.konUzolHrany = null;
+                        return 2;
+                    }
+                    return 0;
                     
                 } catch (ClassCastException e) {
                     //do nothing
@@ -92,6 +135,13 @@ public class Application {
      */
     private boolean removeNode(Uzol pUzol) {
         return this.uzly.remove(pUzol);
+    }
+    
+    private Hrana addEdge() {
+        Hrana edge = new Hrana(true, this.pocUzolHrany, this.konUzolHrany);
+        this.hrany.add(edge);
+        
+        return edge;
     }
     
     //Gettre/Settre
