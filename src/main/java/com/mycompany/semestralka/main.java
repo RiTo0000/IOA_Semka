@@ -58,7 +58,7 @@ public class main extends javax.swing.JFrame {
         Hrana edge = this.app.getOtvorenaHrana();
         if (edge != null) {//pokracujem len ak edge ktory mam zobrazit nie je null
             //nacitanie info do okna pre otvorenu hranu
-            this.jTextFieldEdgeDetailsDlzka.setText(Double.toString(edge.getDlzkaTrasy()));
+            this.jTextFieldEdgeDetailsDlzka.setText(Integer.toString(edge.getDlzkaTrasy()));
             this.jCheckBoxEdgeDetailsPovolenieHrany.setSelected(edge.isHranaPovolena());
             //nastavenie viditelnosti daneho okna
             this.jFrameEdgeDetails.setVisible(true);
@@ -103,6 +103,8 @@ public class main extends javax.swing.JFrame {
         jCheckBoxEdgeDetailsPovolenieHrany = new javax.swing.JCheckBox();
         jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasy = new javax.swing.JButton();
         jFileChooserSaveLocation = new javax.swing.JFileChooser();
+        jFileChooserOpenNodeFile = new javax.swing.JFileChooser();
+        jFileChooserOpenEdgeFile = new javax.swing.JFileChooser();
         jPanelMain = new javax.swing.JPanel();
         jMenuBarMain = new javax.swing.JMenuBar();
         jMenuUzly = new javax.swing.JMenu();
@@ -266,6 +268,12 @@ public class main extends javax.swing.JFrame {
         jFileChooserSaveLocation.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         jFileChooserSaveLocation.setName(""); // NOI18N
 
+        jFileChooserOpenNodeFile.setCurrentDirectory(new java.io.File("C:\\D\\Desktop\\School\\4.Rocnik\\Implementacia_optimalizacnych_algoritmov\\Semestralka\\semestralka\\files"));
+        jFileChooserOpenNodeFile.setDialogTitle("Vyberte subor uzlov");
+
+        jFileChooserOpenEdgeFile.setCurrentDirectory(new java.io.File("C:\\D\\Desktop\\School\\4.Rocnik\\Implementacia_optimalizacnych_algoritmov\\Semestralka\\semestralka\\files"));
+        jFileChooserOpenEdgeFile.setDialogTitle("Vyberte subor hran");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -348,6 +356,11 @@ public class main extends javax.swing.JFrame {
         jMenuSubor.setText("Subor");
 
         jMenuItemSuborNacitanie.setText("Nacitanie dat zo suboru");
+        jMenuItemSuborNacitanie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSuborNacitanieActionPerformed(evt);
+            }
+        });
         jMenuSubor.add(jMenuItemSuborNacitanie);
 
         jMenuItemSuborUlozenie.setText("Ulozenie dat do suboru");
@@ -443,7 +456,7 @@ public class main extends javax.swing.JFrame {
         Hrana otvorenaHrana = this.app.getOtvorenaHrana();
         // nastavime hodnoty z obrazovky
         try {
-            otvorenaHrana.setDlzkaTrasy(Double.parseDouble(this.jTextFieldEdgeDetailsDlzka.getText()));
+            otvorenaHrana.setDlzkaTrasy(Integer.parseInt(this.jTextFieldEdgeDetailsDlzka.getText()));
         } catch (NumberFormatException e) {
             //Do nothing
         }
@@ -457,26 +470,38 @@ public class main extends javax.swing.JFrame {
     private void jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasyActionPerformed
         Hrana edge = this.app.getOtvorenaHrana();
         edge.autoCalculateLength();
-        this.jTextFieldEdgeDetailsDlzka.setText(Double.toString(edge.getDlzkaTrasy()));
+        this.jTextFieldEdgeDetailsDlzka.setText(Integer.toString(edge.getDlzkaTrasy()));
     }//GEN-LAST:event_jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasyActionPerformed
 
     private void jMenuItemSuborUlozenieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSuborUlozenieActionPerformed
-//        if (this.application == null) {
-//            JOptionPane.showMessageDialog(this.jPanelSearchProperties, "Aplikácia nie je inicializovaná", "Chyba", JOptionPane.ERROR_MESSAGE);
-//        }
-//        else {
-            this.jFileChooserSaveLocation.showSaveDialog(this);
-            try {
-                if (this.jFileChooserSaveLocation.getSelectedFile().isDirectory()) {
-                    this.app.saveData(this.jFileChooserSaveLocation.getSelectedFile().getPath());
-                    JOptionPane.showMessageDialog(this.jPanelMain, "Uloženie dát sa podarilo");
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        this.jFileChooserSaveLocation.showSaveDialog(this);
+        try {
+            if (this.jFileChooserSaveLocation.getSelectedFile().isDirectory()) {
+                this.app.saveData(this.jFileChooserSaveLocation.getSelectedFile().getPath());
+                JOptionPane.showMessageDialog(this.jPanelMain, "Uloženie dát sa podarilo");
             }
-//        }
-
+        } catch (IOException ex) {
+            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItemSuborUlozenieActionPerformed
+
+    private void jMenuItemSuborNacitanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSuborNacitanieActionPerformed
+        this.jFileChooserOpenNodeFile.showOpenDialog(this);
+        this.jFileChooserOpenEdgeFile.showOpenDialog(this);
+        try {
+            if (this.jFileChooserOpenNodeFile.getSelectedFile().isFile() &&
+                    this.jFileChooserOpenEdgeFile.getSelectedFile().isFile()){
+                this.app.loadData(this.jFileChooserOpenNodeFile.getSelectedFile().getPath(), 
+                        this.jFileChooserOpenEdgeFile.getSelectedFile().getPath(),
+                        this.jPanelMain);
+                repaint();
+                JOptionPane.showMessageDialog(this.jPanelMain, "Načítanie dát sa podarilo");
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItemSuborNacitanieActionPerformed
 
     /**
      * @param args the command line arguments
@@ -517,6 +542,8 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasy;
     private javax.swing.JCheckBox jCheckBoxEdgeDetailsPovolenieHrany;
     private javax.swing.JComboBox<TypUzla> jComboBoxNodeDetailsTypUzla;
+    private javax.swing.JFileChooser jFileChooserOpenEdgeFile;
+    private javax.swing.JFileChooser jFileChooserOpenNodeFile;
     private javax.swing.JFileChooser jFileChooserSaveLocation;
     private javax.swing.JFrame jFrameEdgeDetails;
     private javax.swing.JFrame jFrameNodeDetails;

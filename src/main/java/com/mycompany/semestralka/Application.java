@@ -222,10 +222,18 @@ public class Application {
      * Metoda na nacitanie dat zo zuboru
      * @param filePatghNodes cesta k suboru uzlov
      * @param filePathEdges cesta k suboru hran
+     * @param pMainPanel hlavna obrazovka
      * @throws java.io.FileNotFoundException
      */
-    public void loadData(String filePatghNodes, String filePathEdges) throws FileNotFoundException {
+    public void loadData(String filePatghNodes, String filePathEdges, JPanel pMainPanel) throws FileNotFoundException {
         this.grafSiete.loadDataFromFiles(filePatghNodes, filePathEdges, this.uzly, this.hrany);
+        //Teraz prejdeme vsetky uzly a hrany a pridame ich na hlavnu obrazovku
+        for (Uzol uzol : this.uzly) {
+            pMainPanel.add(uzol);
+        }
+        for (Hrana hrana : this.hrany) {
+            pMainPanel.add(hrana);
+        }
     }
     
     /**
@@ -234,24 +242,40 @@ public class Application {
      * @throws java.io.IOException
      */
     public void saveData(String filePathDirectory) throws IOException {
-        //TODO ukladanie dat do suboru
         String filePathNodes = filePathDirectory + "\\nodes.txt";
-//        String filePathEdges = filePathDirectory + "\\edges.txt";
+        String filePathEdges = filePathDirectory + "\\edges.txt";
         
         Uzol tempUzol = null;
+        Hrana tempHrana = null;
         
         FileWriter nodeWriter = new FileWriter(filePathNodes);
+        FileWriter edgeWriter = new FileWriter(filePathEdges);
+        
+        //Zapis uzlov
         nodeWriter.write(this.uzly.size() + "\n"); //pocet uzlov na zaciatku suboru
         for (int i = 0; i < this.uzly.size(); i++) {
             tempUzol = this.uzly.get(i);
-            nodeWriter.write(i + " " +
+            nodeWriter.write((i + 1) + " " +
                     tempUzol.getKapacita() + " " + 
-                    "\"" + tempUzol.getNazov() + "\"" + " " + 
+                    tempUzol.getTypUzla().convertToSave()+ " " +
                     tempUzol.getX() + " " +
-                    tempUzol.getY() + "\n");
+                    tempUzol.getY() + " " +
+                    "\"" + tempUzol.getNazov() + "\"" + "\n");
             
         }
         nodeWriter.close();
+        
+        //Zapis hran
+        edgeWriter.write(this.hrany.size() + "\n"); //pocet hran na zaciatku suboru
+        for (int i = 0; i < this.hrany.size(); i++) {
+            tempHrana = this.hrany.get(i);
+            edgeWriter.write((this.uzly.indexOf(tempHrana.getPociatocnyUzol())+1) + " " +
+                    (this.uzly.indexOf(tempHrana.getKoncovyUzol())+1) + " " +
+                    tempHrana.getDlzkaTrasy() + " " +
+                    tempHrana.isHranaPovolena() + "\n");
+            
+        }
+        edgeWriter.close();
     }
     
     /**

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * Write a description of class Sit281211 here.
@@ -112,6 +113,12 @@ public class Sit281211 {
      * Načíta dopravnú sieť a vytvorí v poliach štruktúru doprednej hviezdy.
      */
     public void loadDataFromFiles(String JmnNodes, String JmnEdges, ArrayList<Uzol> pNodes, ArrayList<Hrana> pEdges) throws FileNotFoundException {
+        //Pomocne premenne
+        int x = 0;
+        int y = 0;
+        int intTypUzla = 0;
+        boolean hranaPovolena = false;
+        
         // Reading network sizes
         Scanner scn = new Scanner(new File(JmnNodes));
         Tnn = scn.nextInt();
@@ -128,10 +135,13 @@ public class Sit281211 {
         for (int i = 0; i < Tnn; i++) {
             Nn[i] = scn.nextInt(); //ID uzla
             Ni[i] = scn.nextInt(); //kapacita / poziadavka
-            Na[i] = scn.next(); //nazov uzla
-            //TODO nacitavanie typu uzla
-            //TODO nacitavanie suradnic uzla
-            pNodes.add(new Uzol(Na[i], TypUzla.BezSpecifikacie, Ni[i], -1, -1)); //TODO nahradit -1 za realne values nacitane zo suboru
+            intTypUzla = scn.nextInt(); //int reprezentacia typu uzla (potom to konvertujem pri vytvarani uzla)
+            x = scn.nextInt(); //x suradnica uzla
+            y = scn.nextInt(); //y suradnica uzla
+            Na[i] = scn.nextLine(); //nazov uzla
+            Na[i] = Na[i].trim();
+            Na[i] = Na[i].substring(1, Na[i].length()-1); //odstranenie uvodzoviek
+            pNodes.add(new Uzol(Na[i], TypUzla.convertAtLoad(intTypUzla), Ni[i], x, y));
         }
         scn.close();
         // Reading from edges.txt using Scanner
@@ -139,8 +149,8 @@ public class Sit281211 {
             Eb[i] = sce.nextInt(); //ID pociatocneho uzla
             Ee[i] = sce.nextInt(); //ID koncoveho uzla
             El[i] = sce.nextInt(); //dlzka trasy
-            //TODO nacitavanie ci je povolena alebo nie ta trasa
-            pEdges.add(new Hrana(true, pNodes.get(Eb[i]), pNodes.get(Ee[i])));
+            hranaPovolena = sce.nextBoolean();
+            pEdges.add(new Hrana(hranaPovolena, pNodes.get(Eb[i]-1), pNodes.get(Ee[i]-1)));
         }                
         sce.close();
         // Declaration of arrays for stars

@@ -19,7 +19,7 @@ import javax.swing.JComponent;
  */
 public class Hrana extends JComponent {
     
-    private double dlzkaTrasy;
+    private int dlzkaTrasy;
     private boolean hranaPovolena;
     private Uzol pociatocnyUzol;
     private Uzol koncovyUzol;
@@ -42,7 +42,7 @@ public class Hrana extends JComponent {
     public void autoCalculateLength() {
         Point pocUzolCenter = this.pociatocnyUzol.getCenter();
         Point konUzolCenter = this.koncovyUzol.getCenter();
-        this.dlzkaTrasy = Math.sqrt(Math.pow(Math.abs(pocUzolCenter.getX() - konUzolCenter.getX()), 2) + 
+        this.dlzkaTrasy = (int)Math.sqrt(Math.pow(Math.abs(pocUzolCenter.getX() - konUzolCenter.getX()), 2) + 
                                     Math.pow(Math.abs(pocUzolCenter.getY() - konUzolCenter.getY()), 2));
     }
     
@@ -100,7 +100,7 @@ public class Hrana extends JComponent {
      * Getter pre dlzku trasy
      * @return dlzka trasy
      */
-    public double getDlzkaTrasy() {
+    public int getDlzkaTrasy() {
         return this.dlzkaTrasy;
     }
     
@@ -108,7 +108,7 @@ public class Hrana extends JComponent {
      * Setter pre dlzku trasy
      * @param dlzkaTrasy nova dlzka trasy
      */
-    public void setDlzkaTrasy(double dlzkaTrasy) {
+    public void setDlzkaTrasy(int dlzkaTrasy) {
         this.dlzkaTrasy = dlzkaTrasy;
     }
     
