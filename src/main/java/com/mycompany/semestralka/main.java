@@ -4,7 +4,11 @@
  */
 package com.mycompany.semestralka;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -40,7 +44,7 @@ public class main extends javax.swing.JFrame {
         if (node != null) {//pokracujem len ak node ktory mam zobrazit nie je null
             //nacitanie info do okna pre otvoreny uzol
             this.jTextFieldNodeDetailsNazov.setText(node.getNazov());
-            this.jTextFieldNodeDetailsKapacita.setText(Double.toString(node.getKapacita()));
+            this.jTextFieldNodeDetailsKapacita.setText(Integer.toString(node.getKapacita()));
             this.jComboBoxNodeDetailsTypUzla.setSelectedItem(node.getTypUzla());
             //nastavenie viditelnosti daneho okna
             this.jFrameNodeDetails.setVisible(true);
@@ -98,6 +102,7 @@ public class main extends javax.swing.JFrame {
         jLabelEdgeDetailsPovolenieHrany = new javax.swing.JLabel();
         jCheckBoxEdgeDetailsPovolenieHrany = new javax.swing.JCheckBox();
         jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasy = new javax.swing.JButton();
+        jFileChooserSaveLocation = new javax.swing.JFileChooser();
         jPanelMain = new javax.swing.JPanel();
         jMenuBarMain = new javax.swing.JMenuBar();
         jMenuUzly = new javax.swing.JMenu();
@@ -108,6 +113,9 @@ public class main extends javax.swing.JFrame {
         jMenuItemHranyPridavanie = new javax.swing.JMenuItem();
         jMenuItemHranyEditacia = new javax.swing.JMenuItem();
         jMenuItemHranyMazanie = new javax.swing.JMenuItem();
+        jMenuSubor = new javax.swing.JMenu();
+        jMenuItemSuborNacitanie = new javax.swing.JMenuItem();
+        jMenuItemSuborUlozenie = new javax.swing.JMenuItem();
 
         jFrameNodeDetails.setAlwaysOnTop(true);
         jFrameNodeDetails.setMinimumSize(new java.awt.Dimension(400, 300));
@@ -254,6 +262,10 @@ public class main extends javax.swing.JFrame {
             .addComponent(jPanelEdgeDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        jFileChooserSaveLocation.setCurrentDirectory(new java.io.File("C:\\D\\Desktop\\School\\4.Rocnik\\Implementacia_optimalizacnych_algoritmov\\Semestralka\\semestralka\\files"));
+        jFileChooserSaveLocation.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        jFileChooserSaveLocation.setName(""); // NOI18N
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
@@ -333,6 +345,21 @@ public class main extends javax.swing.JFrame {
 
         jMenuBarMain.add(jMenuHrany);
 
+        jMenuSubor.setText("Subor");
+
+        jMenuItemSuborNacitanie.setText("Nacitanie dat zo suboru");
+        jMenuSubor.add(jMenuItemSuborNacitanie);
+
+        jMenuItemSuborUlozenie.setText("Ulozenie dat do suboru");
+        jMenuItemSuborUlozenie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSuborUlozenieActionPerformed(evt);
+            }
+        });
+        jMenuSubor.add(jMenuItemSuborUlozenie);
+
+        jMenuBarMain.add(jMenuSubor);
+
         setJMenuBar(jMenuBarMain);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -377,7 +404,7 @@ public class main extends javax.swing.JFrame {
         // nastavime hodnoty z obrazovky
         otvorenyUzol.setNazov(this.jTextFieldNodeDetailsNazov.getText());
         try {
-            otvorenyUzol.setKapacita(Double.parseDouble(this.jTextFieldNodeDetailsKapacita.getText()));
+            otvorenyUzol.setKapacita(Integer.parseInt(this.jTextFieldNodeDetailsKapacita.getText()));
         } catch (NumberFormatException e) {
             //Do nothing
         }
@@ -433,6 +460,24 @@ public class main extends javax.swing.JFrame {
         this.jTextFieldEdgeDetailsDlzka.setText(Double.toString(edge.getDlzkaTrasy()));
     }//GEN-LAST:event_jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasyActionPerformed
 
+    private void jMenuItemSuborUlozenieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSuborUlozenieActionPerformed
+//        if (this.application == null) {
+//            JOptionPane.showMessageDialog(this.jPanelSearchProperties, "Aplikácia nie je inicializovaná", "Chyba", JOptionPane.ERROR_MESSAGE);
+//        }
+//        else {
+            this.jFileChooserSaveLocation.showSaveDialog(this);
+            try {
+                if (this.jFileChooserSaveLocation.getSelectedFile().isDirectory()) {
+                    this.app.saveData(this.jFileChooserSaveLocation.getSelectedFile().getPath());
+                    JOptionPane.showMessageDialog(this.jPanelMain, "Uloženie dát sa podarilo");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+//        }
+
+    }//GEN-LAST:event_jMenuItemSuborUlozenieActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -472,6 +517,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasy;
     private javax.swing.JCheckBox jCheckBoxEdgeDetailsPovolenieHrany;
     private javax.swing.JComboBox<TypUzla> jComboBoxNodeDetailsTypUzla;
+    private javax.swing.JFileChooser jFileChooserSaveLocation;
     private javax.swing.JFrame jFrameEdgeDetails;
     private javax.swing.JFrame jFrameNodeDetails;
     private javax.swing.JLabel jLabelEdgeDetailsDlzka;
@@ -484,9 +530,12 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemHranyEditacia;
     private javax.swing.JMenuItem jMenuItemHranyMazanie;
     private javax.swing.JMenuItem jMenuItemHranyPridavanie;
+    private javax.swing.JMenuItem jMenuItemSuborNacitanie;
+    private javax.swing.JMenuItem jMenuItemSuborUlozenie;
     private javax.swing.JMenuItem jMenuItemUzlyEditacia;
     private javax.swing.JMenuItem jMenuItemUzlyMazanie;
     private javax.swing.JMenuItem jMenuItemUzlyPridavanie;
+    private javax.swing.JMenu jMenuSubor;
     private javax.swing.JMenu jMenuUzly;
     private javax.swing.JPanel jPanelEdgeDetails;
     private javax.swing.JPanel jPanelMain;

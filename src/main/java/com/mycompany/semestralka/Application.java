@@ -4,7 +4,12 @@
  */
 package com.mycompany.semestralka;
 
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
@@ -12,11 +17,22 @@ import javax.swing.JPanel;
  * @author namer
  */
 public class Application {
-    
+    /**
+     * Trieda pre konverziu siete na graf, vypocet matice vzdialenosti
+     */
+    private Sit281211 grafSiete;
+    /**
+     * Zoznam vsetkych uzlov
+     */
     private ArrayList<Uzol> uzly;
+    /**
+     * Zoznam vsetkych hran
+     */
     private ArrayList<Hrana> hrany;
+    /**
+     * Mod aplikacie
+     */
     private Mode mode;
-    
     /**
      * Prave otvoreny uzol
      */
@@ -25,7 +41,6 @@ public class Application {
      * Prave otvorena hrana
      */
     private Hrana otvorenaHrana;
-    
     /**
      * Pociatocny uzol novovytvaranej hrany
      */
@@ -42,6 +57,11 @@ public class Application {
         
         this.otvorenyUzol = null;
         this.otvorenaHrana = null;
+        try {
+            this.grafSiete = new Sit281211("", "", this.uzly, this.hrany, false); //vytvorenie instancie aj ked tam nic nebude to nevadi
+        } catch (FileNotFoundException ex) {
+            //Error nenastane lebo nacitavam z listov
+        }
     }
     
     /**
@@ -197,6 +217,53 @@ public class Application {
         }
         return false;           
     }
+    
+    /**
+     * Metoda na nacitanie dat zo zuboru
+     * @param filePatghNodes cesta k suboru uzlov
+     * @param filePathEdges cesta k suboru hran
+     * @throws java.io.FileNotFoundException
+     */
+    public void loadData(String filePatghNodes, String filePathEdges) throws FileNotFoundException {
+        this.grafSiete.loadDataFromFiles(filePatghNodes, filePathEdges, this.uzly, this.hrany);
+    }
+    
+    /**
+     * Metoda pre ukladanie siete do suborov
+     * @param filePathDirectory cesta do priecinka kde sa ulozia data
+     * @throws java.io.IOException
+     */
+    public void saveData(String filePathDirectory) throws IOException {
+        //TODO ukladanie dat do suboru
+        String filePathNodes = filePathDirectory + "\\nodes.txt";
+//        String filePathEdges = filePathDirectory + "\\edges.txt";
+        
+        Uzol tempUzol = null;
+        
+        FileWriter nodeWriter = new FileWriter(filePathNodes);
+        nodeWriter.write(this.uzly.size() + "\n"); //pocet uzlov na zaciatku suboru
+        for (int i = 0; i < this.uzly.size(); i++) {
+            tempUzol = this.uzly.get(i);
+            nodeWriter.write(i + " " +
+                    tempUzol.getKapacita() + " " + 
+                    "\"" + tempUzol.getNazov() + "\"" + " " + 
+                    tempUzol.getX() + " " +
+                    tempUzol.getY() + "\n");
+            
+        }
+        nodeWriter.close();
+    }
+    
+    /**
+     * Metoda pre konverziu editovanej siete na graf v ktorom uz bude mozne 
+     * vyhladavat najkratsiu cestu
+     */
+    public void convertToGraph() {
+        //Iba presunieme data do triedy pre vypocet vzdialenosti a podobne 
+        this.grafSiete.loadDataFromLists(this.uzly, this.hrany);
+    }
+    
+    
     
     //Gettre/Settre
     

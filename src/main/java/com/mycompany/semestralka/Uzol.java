@@ -25,7 +25,7 @@ public class Uzol extends JComponent {
     /**
      * Kapacita resp. poziadavka uzla
      */
-    private double kapacita;
+    private int kapacita;
     /**
      * Typ uzla
      */
@@ -41,7 +41,7 @@ public class Uzol extends JComponent {
      */
     private ArrayList<Hrana> hrany;
     
-    public Uzol(String pNazov, TypUzla pTypUzla, double pKapacita, int pX, int pY) {
+    public Uzol(String pNazov, TypUzla pTypUzla, int pKapacita, int pX, int pY) {
         this.nazov = pNazov;
         this.typUzla = pTypUzla;
         this.kapacita = pKapacita;
@@ -70,11 +70,11 @@ public class Uzol extends JComponent {
         this.nazov = nazov;
     }
 
-    public double getKapacita() {
+    public int getKapacita() {
         return this.kapacita;
     }
 
-    public void setKapacita(double kapacita) {
+    public void setKapacita(int kapacita) {
         this.kapacita = kapacita;
     }
 
