@@ -239,6 +239,9 @@ public class Application {
      * @throws java.io.FileNotFoundException
      */
     public void loadData(String filePatghNodes, String filePathEdges, JPanel pMainPanel) throws FileNotFoundException {
+        //vycistenie siete pred nacitanim zo suboru
+        this.clearNetwork(pMainPanel);
+        //samotne nacitanie zo suboru
         this.grafSiete.loadDataFromFiles(filePatghNodes, filePathEdges, this.uzly, this.hrany);
         //Teraz prejdeme vsetky uzly a hrany a pridame ich na hlavnu obrazovku
         for (Uzol uzol : this.uzly) {
@@ -331,6 +334,16 @@ public class Application {
             }
         }
         return checkOK;
+    }
+    
+    /**
+     * Metoda pre vycistenie siete 
+     * @param pMainPanel hlavny panel
+     */
+    private void clearNetwork(JPanel pMainPanel) {
+        this.uzly.clear();
+        this.hrany.clear();
+        pMainPanel.removeAll();
     }
     
     
