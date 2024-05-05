@@ -14,16 +14,29 @@ import java.awt.geom.Line2D;
 import javax.swing.JComponent;
 
 /**
- *
+ * Trieda hrany pre siet
  * @author namer
  */
 public class Hrana extends JComponent {
-    
+    /**
+     * Dlzka hrany (jej ohodnotenie)
+     */
     private int dlzkaTrasy;
+    /**
+     * Informacia ci je hrana povolena
+     */
     private boolean hranaPovolena;
+    /**
+     * Referencia na pociatocny uzol hrany
+     */
     private Uzol pociatocnyUzol;
+    /**
+     * Referencia na koncovy uzol hrany
+     */
     private Uzol koncovyUzol;
-    
+    /**
+     * Objekt ciary ktora je vykreslovana a podla ktorej sa aj rata ci na nu uzivatel klikol
+     */
     private Line2D.Double lineToDraw;
     
     public Hrana(boolean pHranaPovolena, Uzol pPociatocnyUzol, Uzol pKoncovyUzol, int pDlzkaTrasy) {
@@ -50,6 +63,10 @@ public class Hrana extends JComponent {
                                     Math.pow(Math.abs(pocUzolCenter.getY() - konUzolCenter.getY()), 2));
     }
     
+    /**
+     * Metoda pre vykreslovanie objektu
+     * @param g 
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -147,8 +164,5 @@ public class Hrana extends JComponent {
     public Uzol getKoncovyUzol() {
         return this.koncovyUzol;
     }
-    
-    
-    
-    
+        
 }

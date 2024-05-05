@@ -5,7 +5,7 @@
 package com.mycompany.semestralka;
 
 /**
- *
+ * Enum pre mod aplikacie
  * @author namer
  */
 public enum Mode {
@@ -17,6 +17,10 @@ public enum Mode {
     removeEdge,
     view;
     
+    /**
+     * Metoda na viac user friendly vypisovanie modu aplikacie
+     * @return Popis modu aplikacie 
+     */
     @Override
     public String toString() {
         switch (this) {

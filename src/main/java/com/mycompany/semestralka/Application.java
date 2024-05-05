@@ -8,12 +8,10 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
- * Hlavna aplikacia pre semestralku
+ * Hlavna trieda aplikacie pre semestralku
  * @author namer
  */
 public class Application {
@@ -203,6 +201,10 @@ public class Application {
         return false;
     }
     
+    /**
+     * Metoda pre vytvorenie hrany
+     * @return vytvorena hrana
+     */
     private Hrana addEdge() {
         Hrana edge = new Hrana(true, this.pocUzolHrany, this.konUzolHrany, -1); //dlzku trasy davam na -1 aby sa uskutocnil automaticky vypocet
         this.hrany.add(edge);
@@ -392,8 +394,5 @@ public class Application {
      */
     public void setOtvorenaHrana(Hrana otvorenaHrana) {
         this.otvorenaHrana = otvorenaHrana;
-    }
-    
-    
-        
+    }   
 }

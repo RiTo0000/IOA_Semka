@@ -504,6 +504,7 @@ public class main extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this.jPanelMain, "Uloženie dát sa podarilo");
             }
         } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this.jPanelMain, "Pri ukladaní dát nastala chyba", "Chyba", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItemSuborUlozenieActionPerformed
@@ -522,12 +523,14 @@ public class main extends javax.swing.JFrame {
             }
             
         } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this.jPanelMain, "Pri načítavaní dát nastala chyba", "Chyba", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItemSuborNacitanieActionPerformed
 
     private void jMenuItemSietVytvorenieGrafuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSietVytvorenieGrafuActionPerformed
         this.app.convertToGraph();//konverzia siete na graf
+        JOptionPane.showMessageDialog(this.jPanelMain, "Konverzia siete prebehla uspesne");
     }//GEN-LAST:event_jMenuItemSietVytvorenieGrafuActionPerformed
 
     private void jMenuItemSietKontrolaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSietKontrolaActionPerformed

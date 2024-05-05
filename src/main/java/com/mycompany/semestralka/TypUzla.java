@@ -5,7 +5,7 @@
 package com.mycompany.semestralka;
 
 /**
- *
+ * Enum pre typ uzla v sieti
  * @author namer
  */
 public enum TypUzla {
@@ -14,6 +14,10 @@ public enum TypUzla {
     MozneUmiestnenieSkladu,
     BezSpecifikacie;
     
+    /**
+     * Metoda pre konverziu tohto datoveho typu pre ukladanie
+     * @return int hodnotu pre ukladanie
+     */
     public int convertToSave() {
         switch (this) {
             case PrimarnyZdroj:
@@ -27,6 +31,11 @@ public enum TypUzla {
         }
     }
     
+    /**
+     * Metoda pre nacitavanie daneho datoveho typu z ulozeneho suboru
+     * @param pTypUzla
+     * @return 
+     */
     public static TypUzla convertAtLoad(int pTypUzla) {
         switch (pTypUzla) {
             case 1:
