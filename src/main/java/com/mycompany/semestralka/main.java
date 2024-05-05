@@ -118,6 +118,9 @@ public class main extends javax.swing.JFrame {
         jMenuSubor = new javax.swing.JMenu();
         jMenuItemSuborNacitanie = new javax.swing.JMenuItem();
         jMenuItemSuborUlozenie = new javax.swing.JMenuItem();
+        jMenuSiet = new javax.swing.JMenu();
+        jMenuItemSietKontrola = new javax.swing.JMenuItem();
+        jMenuItemSietVytvorenieGrafu = new javax.swing.JMenuItem();
 
         jFrameNodeDetails.setAlwaysOnTop(true);
         jFrameNodeDetails.setMinimumSize(new java.awt.Dimension(400, 300));
@@ -373,6 +376,26 @@ public class main extends javax.swing.JFrame {
 
         jMenuBarMain.add(jMenuSubor);
 
+        jMenuSiet.setText("Siet");
+
+        jMenuItemSietKontrola.setText("Kontrola siete");
+        jMenuItemSietKontrola.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSietKontrolaActionPerformed(evt);
+            }
+        });
+        jMenuSiet.add(jMenuItemSietKontrola);
+
+        jMenuItemSietVytvorenieGrafu.setText("Vytvorenie grafu");
+        jMenuItemSietVytvorenieGrafu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSietVytvorenieGrafuActionPerformed(evt);
+            }
+        });
+        jMenuSiet.add(jMenuItemSietVytvorenieGrafu);
+
+        jMenuBarMain.add(jMenuSiet);
+
         setJMenuBar(jMenuBarMain);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -503,6 +526,20 @@ public class main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItemSuborNacitanieActionPerformed
 
+    private void jMenuItemSietVytvorenieGrafuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSietVytvorenieGrafuActionPerformed
+        this.app.convertToGraph();//konverzia siete na graf
+    }//GEN-LAST:event_jMenuItemSietVytvorenieGrafuActionPerformed
+
+    private void jMenuItemSietKontrolaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSietKontrolaActionPerformed
+        if (this.app.checkNetwork()) { 
+            //kontrola dopadla dobre dam OK spravu
+            JOptionPane.showMessageDialog(this.jPanelMain, "Kontrola siete prebehla uspesne");
+        }
+        else //kontrola nedopadla dobre dam error spravu
+            JOptionPane.showMessageDialog(this.jPanelMain, "Siet nie je kompletna", "Chyba", JOptionPane.ERROR_MESSAGE);
+            
+    }//GEN-LAST:event_jMenuItemSietKontrolaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -557,11 +594,14 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemHranyEditacia;
     private javax.swing.JMenuItem jMenuItemHranyMazanie;
     private javax.swing.JMenuItem jMenuItemHranyPridavanie;
+    private javax.swing.JMenuItem jMenuItemSietKontrola;
+    private javax.swing.JMenuItem jMenuItemSietVytvorenieGrafu;
     private javax.swing.JMenuItem jMenuItemSuborNacitanie;
     private javax.swing.JMenuItem jMenuItemSuborUlozenie;
     private javax.swing.JMenuItem jMenuItemUzlyEditacia;
     private javax.swing.JMenuItem jMenuItemUzlyMazanie;
     private javax.swing.JMenuItem jMenuItemUzlyPridavanie;
+    private javax.swing.JMenu jMenuSiet;
     private javax.swing.JMenu jMenuSubor;
     private javax.swing.JMenu jMenuUzly;
     private javax.swing.JPanel jPanelEdgeDetails;

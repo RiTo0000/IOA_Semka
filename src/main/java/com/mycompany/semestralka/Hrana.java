@@ -26,12 +26,16 @@ public class Hrana extends JComponent {
     
     private Line2D.Double lineToDraw;
     
-    public Hrana(boolean pHranaPovolena, Uzol pPociatocnyUzol, Uzol pKoncovyUzol) {
+    public Hrana(boolean pHranaPovolena, Uzol pPociatocnyUzol, Uzol pKoncovyUzol, int pDlzkaTrasy) {
         this.hranaPovolena = pHranaPovolena;
         this.pociatocnyUzol = pPociatocnyUzol;
         this.koncovyUzol = pKoncovyUzol;
         
-        this.autoCalculateLength(); //automaticky vyratat dlzku trasy pri vytvarani hrany
+        if (pDlzkaTrasy == -1) { //pri vytvarani uzivatelom v aplikacii tam davame -1 aby automaticky vyratalo
+            this.autoCalculateLength(); //automaticky vyratat dlzku trasy pri vytvarani hrany
+        }
+        else
+            this.dlzkaTrasy = pDlzkaTrasy;
         
         this.setDefault();
     }

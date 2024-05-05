@@ -114,78 +114,50 @@ public class Sit281211 {
      */
     public void loadDataFromFiles(String JmnNodes, String JmnEdges, ArrayList<Uzol> pNodes, ArrayList<Hrana> pEdges) throws FileNotFoundException {
         //Pomocne premenne
+        //Uzol
+        int IDUzla = 0;
+        int kapacita = 0;
         int x = 0;
         int y = 0;
+        String nazovUzla = "";
         int intTypUzla = 0;
+        //Hrana
+        int IDPocUzol = 0;
+        int IDKonUzol = 0;
+        int dlzkaTrasy = 0;
         boolean hranaPovolena = false;
         
         // Reading network sizes
         Scanner scn = new Scanner(new File(JmnNodes));
-        Tnn = scn.nextInt();
+        Tnn = scn.nextInt(); //pocet uzlov v subore
         Scanner sce = new Scanner(new File(JmnEdges));
-        Tne = sce.nextInt();
-        // Declaration of input arrays
-        Nn = new int[Tnn];
-        Ni = new int[Tnn];
-        Na = new String[Tnn];
-        Eb = new int[Tne];
-        Ee = new int[Tne]; 
-        El = new int[Tne];
+        Tne = sce.nextInt(); //pocet hran v subore
+
         // Reading from nodes.txt using Scanner
         for (int i = 0; i < Tnn; i++) {
-            Nn[i] = scn.nextInt(); //ID uzla
-            Ni[i] = scn.nextInt(); //kapacita / poziadavka
+            IDUzla = scn.nextInt(); //ID uzla (explicitne ale je to v subore musim to citat)
+            kapacita = scn.nextInt(); //kapacita / poziadavka
             intTypUzla = scn.nextInt(); //int reprezentacia typu uzla (potom to konvertujem pri vytvarani uzla)
             x = scn.nextInt(); //x suradnica uzla
             y = scn.nextInt(); //y suradnica uzla
-            Na[i] = scn.nextLine(); //nazov uzla
-            Na[i] = Na[i].trim();
-            Na[i] = Na[i].substring(1, Na[i].length()-1); //odstranenie uvodzoviek
-            pNodes.add(new Uzol(Na[i], TypUzla.convertAtLoad(intTypUzla), Ni[i], x, y));
+            nazovUzla = scn.nextLine(); //nazov uzla
+            nazovUzla = nazovUzla.trim();
+            nazovUzla = nazovUzla.substring(1, nazovUzla.length()-1); //odstranenie uvodzoviek
+            pNodes.add(new Uzol(nazovUzla, TypUzla.convertAtLoad(intTypUzla), kapacita, x, y));
         }
         scn.close();
         // Reading from edges.txt using Scanner
         for (int i = 0; i < Tne; i++) {
-            Eb[i] = sce.nextInt(); //ID pociatocneho uzla
-            Ee[i] = sce.nextInt(); //ID koncoveho uzla
-            El[i] = sce.nextInt(); //dlzka trasy
-            hranaPovolena = sce.nextBoolean();
-            pEdges.add(new Hrana(hranaPovolena, pNodes.get(Eb[i]-1), pNodes.get(Ee[i]-1)));
+            IDPocUzol = sce.nextInt(); //ID pociatocneho uzla
+            IDKonUzol = sce.nextInt(); //ID koncoveho uzla
+            dlzkaTrasy = sce.nextInt(); //dlzka trasy
+            hranaPovolena = sce.nextBoolean(); //informacia o tom ci je hrana povolena alebo nie 
+            pEdges.add(new Hrana(hranaPovolena, pNodes.get(IDPocUzol-1), pNodes.get(IDKonUzol-1), dlzkaTrasy));
         }                
         sce.close();
-        // Declaration of arrays for stars
-        Fs = new int[Tnn];
-        Is = new int[Tnn];
-        Ts = new int[2 * Tne];
-        Hs = new int[2 * Tne];
-        //Filling arrays with star data
-        int[] P = new int[Tnn];
-        //Initialization of Is with zeros
-        for (int i = 0; i < Tnn; i++) {
-            Is[i] = 0;
-        }
-        // Search over Eb and Ee and counting occurence of individual nodes numbered from 1 to Tnn
-        for (int i = 0; i < Tne; i++) {
-            Is[Eb[i] - 1]++;
-            Is[Ee[i] - 1]++;
-        }
-        // Filling Fs and initialization of P
-        Fs[0] = 0;
-        P[0] = Fs[0];
-        for (int i = 1; i < Tnn; i++) {
-            Fs[i] = Fs[i - 1] + Is[i - 1];
-            P[i] = Fs[i];
-        }
-        for (int i = 0; i < Tne; i++) {
-            Ts[P[Eb[i] - 1]] = Ee[i] - 1;
-            Hs[P[Eb[i] - 1]] = El[i];
-            P[Eb[i] - 1]++;
-            Ts[P[Ee[i] - 1]] = Eb[i] - 1;
-            Hs[P[Ee[i] - 1]] = El[i];
-            P[Ee[i] - 1]++;
-        }
-
-        Q = new PrQueue(Tnn); // The object prior queue is created
+        
+        //zavolam nacitanie z listov aby spravne nacitalo povolene a zakazane hrany
+        this.loadDataFromLists(pNodes, pEdges); 
     }
     
     /**
@@ -198,66 +170,76 @@ public class Sit281211 {
      * Načíta dopravnú sieť a vytvorí v poliach štruktúru doprednej hviezdy.
      */
     public void loadDataFromLists(ArrayList<Uzol> pNodes, ArrayList<Hrana> pEdges) {
-        //TODO prejst a vytvorit nacitavanie zo zoznamov
+        //Pomocne premenne
+        Uzol tempUzol = null;
+        
         // Reading network sizes
-//        Scanner scn = new Scanner(new File(JmnNodes));
-//        Tnn = scn.nextInt();
-//        Scanner sce = new Scanner(new File(JmnEdges));
-//        Tne = sce.nextInt();
-//        // Declaration of input arrays
-//        Nn = new int[Tnn];
-//        Ni = new int[Tnn];
-//        Na = new String[Tnn];
-//        Eb = new int[Tne];
-//        Ee = new int[Tne]; 
-//        El = new int[Tne];
-//        // Reading from edges.txt using Scanner
-//        for (int i = 0; i < Tne; i++) {
-//            Eb[i] = sce.nextInt();
-//            Ee[i] = sce.nextInt();
-//            El[i] = sce.nextInt();
-//        }                
-//        sce.close();
-//        // Reading from nodes.txt using Scanner
-//        for (int i = 0; i < Tnn; i++) {
-//            Nn[i] = scn.nextInt();
-//            Ni[i] = scn.nextInt();
-//            Na[i] = scn.next();
-//        }
-//        scn.close();
-//        // Declaration of arrays for stars
-//        Fs = new int[Tnn];
-//        Is = new int[Tnn];
-//        Ts = new int[2 * Tne];
-//        Hs = new int[2 * Tne];
-//        //Filling arrays with star data
-//        int[] P = new int[Tnn];
-//        //Initialization of Is with zeros
-//        for (int i = 0; i < Tnn; i++) {
-//            Is[i] = 0;
-//        }
-//        // Search over Eb and Ee and counting occurence of individual nodes numbered from 1 to Tnn
-//        for (int i = 0; i < Tne; i++) {
-//            Is[Eb[i] - 1]++;
-//            Is[Ee[i] - 1]++;
-//        }
-//        // Filling Fs and initialization of P
-//        Fs[0] = 0;
-//        P[0] = Fs[0];
-//        for (int i = 1; i < Tnn; i++) {
-//            Fs[i] = Fs[i - 1] + Is[i - 1];
-//            P[i] = Fs[i];
-//        }
-//        for (int i = 0; i < Tne; i++) {
-//            Ts[P[Eb[i] - 1]] = Ee[i] - 1;
-//            Hs[P[Eb[i] - 1]] = El[i];
-//            P[Eb[i] - 1]++;
-//            Ts[P[Ee[i] - 1]] = Eb[i] - 1;
-//            Hs[P[Ee[i] - 1]] = El[i];
-//            P[Ee[i] - 1]++;
-//        }
-//
-//        Q = new PrQueue(Tnn); // The object prior queue is created
+        Tnn = pNodes.size(); //pocet uzlov
+        Tne = 0;//inicializujem si pocet hran na 0
+        for (Hrana pEdge : pEdges) { //spocitam vsetky hrany ktore su povolene
+            if (pEdge.isHranaPovolena()) 
+                Tne++;
+        }
+        // Declaration of input arrays
+        Nn = new int[Tnn];
+        Ni = new int[Tnn];
+        Na = new String[Tnn];
+        Eb = new int[Tne];
+        Ee = new int[Tne]; 
+        El = new int[Tne];
+        // Reading from list pNodes
+        for (int i = 0; i < Tnn; i++) {
+            tempUzol = pNodes.get(i);
+            Nn[i] = i + 1; //ID uzla
+            Ni[i] = tempUzol.getKapacita(); //kapacita / poziadavka
+            Na[i] = tempUzol.getNazov(); //nazov uzla
+        }
+        // Reading from list of edges
+        int h = 0;
+        for (Hrana pEdge : pEdges) {
+            if (pEdge.isHranaPovolena()) {
+                Eb[h] = (pNodes.indexOf(pEdge.getPociatocnyUzol())+1); //ID pociatocneho uzla
+                Ee[h] = (pNodes.indexOf(pEdge.getKoncovyUzol())+1); //ID koncoveho uzla
+                El[h] = pEdge.getDlzkaTrasy(); //dlzka trasy
+                h++;
+            }
+        }
+        
+        // Declaration of arrays for stars
+        Fs = new int[Tnn];
+        Is = new int[Tnn];
+        Ts = new int[2 * Tne];
+        Hs = new int[2 * Tne];
+        if (Tnn != 0) { //v naplnani pokracujeme len ak mame nejake uzly
+            //Filling arrays with star data
+            int[] P = new int[Tnn];
+            //Initialization of Is with zeros
+            for (int i = 0; i < Tnn; i++) {
+                Is[i] = 0;
+            }
+            // Search over Eb and Ee and counting occurence of individual nodes numbered from 1 to Tnn
+            for (int i = 0; i < Tne; i++) {
+                Is[Eb[i] - 1]++;
+                Is[Ee[i] - 1]++;
+            }
+            // Filling Fs and initialization of P
+            Fs[0] = 0;
+            P[0] = Fs[0];
+            for (int i = 1; i < Tnn; i++) {
+                Fs[i] = Fs[i - 1] + Is[i - 1];
+                P[i] = Fs[i];
+            }
+            for (int i = 0; i < Tne; i++) {
+                Ts[P[Eb[i] - 1]] = Ee[i] - 1;
+                Hs[P[Eb[i] - 1]] = El[i];
+                P[Eb[i] - 1]++;
+                Ts[P[Ee[i] - 1]] = Eb[i] - 1;
+                Hs[P[Ee[i] - 1]] = El[i];
+                P[Ee[i] - 1]++;
+            }
+        }
+
+        Q = new PrQueue(Tnn); // The object prior queue is created
     }
 
     /**
@@ -301,7 +283,7 @@ public class Sit281211 {
      * shortest path from <code>nn</code>
      */
     private void GetRowI(int nn, int[] P, int[] D) {
-        int mxi = 2147483647;
+        int mxi = Integer.MAX_VALUE;
         int a; // A current node, which is processed
         int s; // A neighboring node, which is labeled
         int o; // Old label of s

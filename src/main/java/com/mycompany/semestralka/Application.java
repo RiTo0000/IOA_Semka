@@ -49,6 +49,10 @@ public class Application {
      * Koncovy uzol novovytvaranej hrany
      */
     private Uzol konUzolHrany;
+    /**
+     * Informacia o tom ci bola siet konvertovana na graf a graf je aj aktualny
+     */
+    private boolean grafVytvoreny;
     
     public Application() {
         this.uzly = new ArrayList<>();
@@ -62,6 +66,7 @@ public class Application {
         } catch (FileNotFoundException ex) {
             //Error nenastane lebo nacitavam z listov
         }
+        this.grafVytvoreny = false;
     }
     
     /**
@@ -83,11 +88,13 @@ public class Application {
                 node = this.addNode(posX, posY);
                 pMainPanel.add(node);
                 this.setOtvorenyUzol(node);
+                this.grafVytvoreny = false;
                 return 1;
             case editNode:
                 try {
                     node = (Uzol)pMainPanel.getComponentAt(posX, posY);
                     this.setOtvorenyUzol(node);
+                    this.grafVytvoreny = false;
                     return 1;
                     
                 } catch (ClassCastException e) {
@@ -99,6 +106,7 @@ public class Application {
                     node = (Uzol)pMainPanel.getComponentAt(posX, posY);
                     if (this.removeNode(node)) {
                         pMainPanel.remove(node);
+                        this.grafVytvoreny = false;
                         return 2;
                     }
                     else
@@ -128,6 +136,7 @@ public class Application {
                         this.pocUzolHrany = null;
                         this.konUzolHrany.setSelected(false);
                         this.konUzolHrany = null;
+                        this.grafVytvoreny = false;
                         return 3;
                     }
                     return 0;
@@ -140,6 +149,7 @@ public class Application {
                 try {
                     edge = (Hrana)pMainPanel.getComponentAt(posX, posY);
                     this.setOtvorenaHrana(edge);
+                    this.grafVytvoreny = false;
                     return 3;
                     
                 } catch (ClassCastException e) {
@@ -151,6 +161,7 @@ public class Application {
                     edge = (Hrana)pMainPanel.getComponentAt(posX, posY);
                     if (this.removeEdge(edge)) {
                         pMainPanel.remove(edge);
+                        this.grafVytvoreny = false;
                         return 2;
                     }
                     else
@@ -193,7 +204,7 @@ public class Application {
     }
     
     private Hrana addEdge() {
-        Hrana edge = new Hrana(true, this.pocUzolHrany, this.konUzolHrany);
+        Hrana edge = new Hrana(true, this.pocUzolHrany, this.konUzolHrany, -1); //dlzku trasy davam na -1 aby sa uskutocnil automaticky vypocet
         this.hrany.add(edge);
         
         //Hranu pridam k uzlom ako incidentnu
@@ -234,6 +245,7 @@ public class Application {
         for (Hrana hrana : this.hrany) {
             pMainPanel.add(hrana);
         }
+        this.grafVytvoreny = true;
     }
     
     /**
@@ -285,8 +297,39 @@ public class Application {
     public void convertToGraph() {
         //Iba presunieme data do triedy pre vypocet vzdialenosti a podobne 
         this.grafSiete.loadDataFromLists(this.uzly, this.hrany);
+        this.grafVytvoreny = true;
     }
     
+    /**
+     * Metoda pre vykonanie kontroly siete
+     * @return true ak kontrola siete dopadla v poriadku, false inak
+     */
+    public boolean checkNetwork() {
+        boolean checkOK = true;
+        int numOfNodes = this.uzly.size();
+        int[] nodeIDs = new int[numOfNodes];
+        for (int i = 0; i < nodeIDs.length; i++) {
+            nodeIDs[i] = i+1;            
+        }
+        int[][] D = new int[numOfNodes][numOfNodes];
+        if (!this.grafVytvoreny) { //ak nie je vytvoreny graf tak ho musim vytvorit
+            this.convertToGraph();
+        }
+        this.grafSiete.GetMatrixI(numOfNodes, numOfNodes, nodeIDs, nodeIDs, D); //ziskam celu maticu vzdialenosti medzi vsetkymi uzlami
+        //samotna kontrola matice vzdialenosti
+        for (int i = 0; i < D.length; i++) { //prechadzam riadky matice
+            for (int j = 0; j < D[i].length; j++) { //prechadzam stlpce matice
+                if (D[i][j] == Integer.MAX_VALUE) { //znamena ze do toho nodu sa nedostanem
+                    checkOK = false;
+                    break;
+                }
+            }
+            if (!checkOK) { //ak uz check nie je OK tak nemusim dalej kontrolovat
+                break;
+            }
+        }
+        return checkOK;
+    }
     
     
     //Gettre/Settre
