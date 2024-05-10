@@ -182,7 +182,7 @@ public class Application {
      */
     private Uzol addNode(int posX, int posY) {
         //Pridanie samotneho uzla s default hodnotami
-        Uzol node = new Uzol("", TypUzla.BezSpecifikacie, 0, posX, posY);
+        Uzol node = new Uzol("", TypUzla.BezSpecifikacie, 0, posX, posY, 300); //defaultna cena za vybudovanie strediska v danom uzle je 300
         this.uzly.add(node);
         
         return node;
@@ -273,10 +273,11 @@ public class Application {
         for (int i = 0; i < this.uzly.size(); i++) {
             tempUzol = this.uzly.get(i);
             nodeWriter.write((i + 1) + " " +
-                    tempUzol.getKapacita() + " " + 
+                    tempUzol.getPoziadavka()+ " " + 
                     tempUzol.getTypUzla().convertToSave()+ " " +
                     tempUzol.getX() + " " +
                     tempUzol.getY() + " " +
+                    tempUzol.getCenaZaVybudovanieStrediska()+ " " +
                     "\"" + tempUzol.getNazov() + "\"" + "\n");
             
         }

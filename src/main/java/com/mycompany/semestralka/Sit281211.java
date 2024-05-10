@@ -116,9 +116,10 @@ public class Sit281211 {
         //Pomocne premenne
         //Uzol
         int IDUzla = 0;
-        int kapacita = 0;
+        int poziadavka = 0;
         int x = 0;
         int y = 0;
+        int cenaZaVybudovanie = 0;
         String nazovUzla = "";
         int intTypUzla = 0;
         //Hrana
@@ -136,14 +137,15 @@ public class Sit281211 {
         // Reading from nodes.txt using Scanner
         for (int i = 0; i < Tnn; i++) {
             IDUzla = scn.nextInt(); //ID uzla (explicitne ale je to v subore musim to citat)
-            kapacita = scn.nextInt(); //kapacita / poziadavka
+            poziadavka = scn.nextInt(); // poziadavka
             intTypUzla = scn.nextInt(); //int reprezentacia typu uzla (potom to konvertujem pri vytvarani uzla)
             x = scn.nextInt(); //x suradnica uzla
             y = scn.nextInt(); //y suradnica uzla
+            cenaZaVybudovanie = scn.nextInt(); //cena za vybudovanie strediska
             nazovUzla = scn.nextLine(); //nazov uzla
             nazovUzla = nazovUzla.trim();
             nazovUzla = nazovUzla.substring(1, nazovUzla.length()-1); //odstranenie uvodzoviek
-            pNodes.add(new Uzol(nazovUzla, TypUzla.convertAtLoad(intTypUzla), kapacita, x, y));
+            pNodes.add(new Uzol(nazovUzla, TypUzla.convertAtLoad(intTypUzla), poziadavka, x, y, cenaZaVybudovanie));
         }
         scn.close();
         // Reading from edges.txt using Scanner
@@ -191,7 +193,7 @@ public class Sit281211 {
         for (int i = 0; i < Tnn; i++) {
             tempUzol = pNodes.get(i);
             Nn[i] = i + 1; //ID uzla
-            Ni[i] = tempUzol.getKapacita(); //kapacita / poziadavka
+            Ni[i] = tempUzol.getPoziadavka(); // poziadavka uzla
             Na[i] = tempUzol.getNazov(); //nazov uzla
         }
         // Reading from list of edges

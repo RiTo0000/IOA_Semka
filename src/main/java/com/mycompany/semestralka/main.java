@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,8 +45,9 @@ public class main extends javax.swing.JFrame {
         if (node != null) {//pokracujem len ak node ktory mam zobrazit nie je null
             //nacitanie info do okna pre otvoreny uzol
             this.jTextFieldNodeDetailsNazov.setText(node.getNazov());
-            this.jTextFieldNodeDetailsKapacita.setText(Integer.toString(node.getKapacita()));
+            this.jTextFieldNodeDetailsPoziadavka.setText(Integer.toString(node.getPoziadavka()));
             this.jComboBoxNodeDetailsTypUzla.setSelectedItem(node.getTypUzla());
+            this.jTextFieldNodeDetailsCenaZaVybudovanie.setText(Integer.toString(node.getCenaZaVybudovanieStrediska()));
             //nastavenie viditelnosti daneho okna
             this.jFrameNodeDetails.setVisible(true);
             this.jPanelNodeDetails.setVisible(true);
@@ -91,10 +93,12 @@ public class main extends javax.swing.JFrame {
         jPanelNodeDetails = new javax.swing.JPanel();
         jLabelNodeDetailsNazov = new javax.swing.JLabel();
         jTextFieldNodeDetailsNazov = new javax.swing.JTextField();
-        jLabelNodeDetailsKapacita = new javax.swing.JLabel();
-        jTextFieldNodeDetailsKapacita = new javax.swing.JTextField();
+        jLabelNodeDetailsPoziadavka = new javax.swing.JLabel();
+        jTextFieldNodeDetailsPoziadavka = new javax.swing.JTextField();
         jLabelNodeDetailsTypUzla = new javax.swing.JLabel();
         jComboBoxNodeDetailsTypUzla = new javax.swing.JComboBox<>();
+        jLabelNodeDetailsCenaZaVybudovanie = new javax.swing.JLabel();
+        jTextFieldNodeDetailsCenaZaVybudovanie = new javax.swing.JTextField();
         jFrameEdgeDetails = new javax.swing.JFrame();
         jPanelEdgeDetails = new javax.swing.JPanel();
         jLabelEdgeDetailsDlzka = new javax.swing.JLabel();
@@ -137,10 +141,10 @@ public class main extends javax.swing.JFrame {
         jTextFieldNodeDetailsNazov.setMinimumSize(new java.awt.Dimension(200, 22));
         jTextFieldNodeDetailsNazov.setPreferredSize(new java.awt.Dimension(200, 22));
 
-        jLabelNodeDetailsKapacita.setText("Kapacita");
+        jLabelNodeDetailsPoziadavka.setText("Poziadavka");
 
-        jTextFieldNodeDetailsKapacita.setMinimumSize(new java.awt.Dimension(200, 22));
-        jTextFieldNodeDetailsKapacita.setPreferredSize(new java.awt.Dimension(200, 22));
+        jTextFieldNodeDetailsPoziadavka.setMinimumSize(new java.awt.Dimension(200, 22));
+        jTextFieldNodeDetailsPoziadavka.setPreferredSize(new java.awt.Dimension(200, 22));
 
         jLabelNodeDetailsTypUzla.setText("Typ uzla");
 
@@ -148,39 +152,54 @@ public class main extends javax.swing.JFrame {
         jComboBoxNodeDetailsTypUzla.setMinimumSize(new java.awt.Dimension(200, 22));
         jComboBoxNodeDetailsTypUzla.setPreferredSize(new java.awt.Dimension(200, 22));
 
+        jLabelNodeDetailsCenaZaVybudovanie.setText("Cena za vybudovanie strediska");
+
+        jTextFieldNodeDetailsCenaZaVybudovanie.setMinimumSize(new java.awt.Dimension(100, 22));
+        jTextFieldNodeDetailsCenaZaVybudovanie.setPreferredSize(new java.awt.Dimension(100, 22));
+
         javax.swing.GroupLayout jPanelNodeDetailsLayout = new javax.swing.GroupLayout(jPanelNodeDetails);
         jPanelNodeDetails.setLayout(jPanelNodeDetailsLayout);
         jPanelNodeDetailsLayout.setHorizontalGroup(
             jPanelNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelNodeDetailsLayout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addGroup(jPanelNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabelNodeDetailsKapacita)
-                    .addComponent(jLabelNodeDetailsNazov, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelNodeDetailsTypUzla, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(26, 26, 26)
-                .addGroup(jPanelNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextFieldNodeDetailsNazov, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextFieldNodeDetailsKapacita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBoxNodeDetailsTypUzla, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addGroup(jPanelNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelNodeDetailsLayout.createSequentialGroup()
+                        .addComponent(jLabelNodeDetailsCenaZaVybudovanie)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                        .addComponent(jTextFieldNodeDetailsCenaZaVybudovanie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelNodeDetailsLayout.createSequentialGroup()
+                        .addGroup(jPanelNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabelNodeDetailsPoziadavka)
+                            .addComponent(jLabelNodeDetailsNazov, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelNodeDetailsTypUzla, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanelNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxNodeDetailsTypUzla, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldNodeDetailsPoziadavka, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldNodeDetailsNazov, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(58, 58, 58))
         );
         jPanelNodeDetailsLayout.setVerticalGroup(
             jPanelNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelNodeDetailsLayout.createSequentialGroup()
-                .addGap(52, 52, 52)
+                .addGap(40, 40, 40)
                 .addGroup(jPanelNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNodeDetailsNazov)
                     .addComponent(jTextFieldNodeDetailsNazov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                .addGap(26, 26, 26)
                 .addGroup(jPanelNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelNodeDetailsKapacita)
-                    .addComponent(jTextFieldNodeDetailsKapacita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelNodeDetailsPoziadavka)
+                    .addComponent(jTextFieldNodeDetailsPoziadavka, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(jPanelNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNodeDetailsTypUzla)
                     .addComponent(jComboBoxNodeDetailsTypUzla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanelNodeDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelNodeDetailsCenaZaVybudovanie)
+                    .addComponent(jTextFieldNodeDetailsCenaZaVybudovanie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jFrameNodeDetailsLayout = new javax.swing.GroupLayout(jFrameNodeDetails.getContentPane());
@@ -440,7 +459,8 @@ public class main extends javax.swing.JFrame {
         // nastavime hodnoty z obrazovky
         otvorenyUzol.setNazov(this.jTextFieldNodeDetailsNazov.getText());
         try {
-            otvorenyUzol.setKapacita(Integer.parseInt(this.jTextFieldNodeDetailsKapacita.getText()));
+            otvorenyUzol.setPoziadavka(Integer.parseInt(this.jTextFieldNodeDetailsPoziadavka.getText()));
+            otvorenyUzol.setCenaZaVybudovanieStrediska(Integer.parseInt(this.jTextFieldNodeDetailsCenaZaVybudovanie.getText()));
         } catch (NumberFormatException e) {
             //Do nothing
         }
@@ -510,21 +530,23 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemSuborUlozenieActionPerformed
 
     private void jMenuItemSuborNacitanieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSuborNacitanieActionPerformed
-        this.jFileChooserOpenNodeFile.showOpenDialog(this);
-        this.jFileChooserOpenEdgeFile.showOpenDialog(this);
-        try {
-            if (this.jFileChooserOpenNodeFile.getSelectedFile().isFile() &&
-                    this.jFileChooserOpenEdgeFile.getSelectedFile().isFile()){
-                this.app.loadData(this.jFileChooserOpenNodeFile.getSelectedFile().getPath(), 
-                        this.jFileChooserOpenEdgeFile.getSelectedFile().getPath(),
-                        this.jPanelMain);
-                repaint();
-                JOptionPane.showMessageDialog(this.jPanelMain, "Načítanie dát sa podarilo");
+        if (this.jFileChooserOpenNodeFile.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { //dalej pokracujem len ak nezrusil vyber na prvom
+            if (this.jFileChooserOpenEdgeFile.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { //dalej pokracujem len ak nezrusil vyber na druhom
+                try {
+                    if (this.jFileChooserOpenNodeFile.getSelectedFile().isFile() &&
+                            this.jFileChooserOpenEdgeFile.getSelectedFile().isFile()){
+                        this.app.loadData(this.jFileChooserOpenNodeFile.getSelectedFile().getPath(), 
+                                this.jFileChooserOpenEdgeFile.getSelectedFile().getPath(),
+                                this.jPanelMain);
+                        repaint();
+                        JOptionPane.showMessageDialog(this.jPanelMain, "Načítanie dát sa podarilo");
+                    }
+
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this.jPanelMain, "Pri načítavaní dát nastala chyba", "Chyba", JOptionPane.ERROR_MESSAGE);
+                    Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this.jPanelMain, "Pri načítavaní dát nastala chyba", "Chyba", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItemSuborNacitanieActionPerformed
 
@@ -589,8 +611,9 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JFrame jFrameNodeDetails;
     private javax.swing.JLabel jLabelEdgeDetailsDlzka;
     private javax.swing.JLabel jLabelEdgeDetailsPovolenieHrany;
-    private javax.swing.JLabel jLabelNodeDetailsKapacita;
+    private javax.swing.JLabel jLabelNodeDetailsCenaZaVybudovanie;
     private javax.swing.JLabel jLabelNodeDetailsNazov;
+    private javax.swing.JLabel jLabelNodeDetailsPoziadavka;
     private javax.swing.JLabel jLabelNodeDetailsTypUzla;
     private javax.swing.JMenuBar jMenuBarMain;
     private javax.swing.JMenu jMenuHrany;
@@ -611,7 +634,8 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JPanel jPanelNodeDetails;
     private javax.swing.JTextField jTextFieldEdgeDetailsDlzka;
-    private javax.swing.JTextField jTextFieldNodeDetailsKapacita;
+    private javax.swing.JTextField jTextFieldNodeDetailsCenaZaVybudovanie;
     private javax.swing.JTextField jTextFieldNodeDetailsNazov;
+    private javax.swing.JTextField jTextFieldNodeDetailsPoziadavka;
     // End of variables declaration//GEN-END:variables
 }

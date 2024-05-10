@@ -24,9 +24,9 @@ public class Uzol extends JComponent {
      */
     private String nazov;
     /**
-     * Kapacita resp. poziadavka uzla
+     * Poziadavka uzla
      */
-    private int kapacita;
+    private int poziadavka;
     /**
      * Typ uzla
      */
@@ -42,11 +42,17 @@ public class Uzol extends JComponent {
      */
     private ArrayList<Hrana> hrany;
     
-    public Uzol(String pNazov, TypUzla pTypUzla, int pKapacita, int pX, int pY) {
+    /**
+     * Cena za vybudovanie strediska v danom uzle
+     */
+    private int cenaZaVybudovanieStrediska;
+    
+    public Uzol(String pNazov, TypUzla pTypUzla, int pPoziadavka, int pX, int pY, int pCenaZaVybudovanieStrediska) {
         this.nazov = pNazov;
         this.typUzla = pTypUzla;
-        this.kapacita = pKapacita;
+        this.poziadavka = pPoziadavka;
         this.hrany = new ArrayList<>();
+        this.cenaZaVybudovanieStrediska = pCenaZaVybudovanieStrediska;
         
         //potrebne pre jeho zobrazenie
         setSize(new Dimension(defaultWidth, defaultWidth));
@@ -84,19 +90,19 @@ public class Uzol extends JComponent {
     }
     
     /**
-     * Getter pre kapacitu/poziadavku uzla
-     * @return kapacita/poziadavka uzla
+     * Getter pre poziadavku uzla
+     * @return poziadavka uzla
      */
-    public int getKapacita() {
-        return this.kapacita;
+    public int getPoziadavka() {
+        return this.poziadavka;
     }
     
     /**
-     * Setter pre kapacitu/poziadavku uzla
-     * @param kapacita nova kapacita/poziadavka uzla
+     * Setter pre poziadavku uzla
+     * @param poziadavka nova poziadavka uzla
      */
-    public void setKapacita(int kapacita) {
-        this.kapacita = kapacita;
+    public void setPoziadavka(int poziadavka) {
+        this.poziadavka = poziadavka;
     }
 
     /**
@@ -154,5 +160,22 @@ public class Uzol extends JComponent {
     public void addHrana(Hrana hrana) {
         this.hrany.add(hrana);
     }
-       
+    
+    /**
+     * Getter pre cenu za vybudovanie strediska v danom uzle
+     * @return cena za vybudovanie strediska v danom uzle
+     */
+    public int getCenaZaVybudovanieStrediska() {
+        return this.cenaZaVybudovanieStrediska;
+    }
+
+    /**
+     * Setter pre cenu za vybudovanie strediska v danom uzle
+     * @param cenaZaVybudovanieStrediska nova cena za vybudovanie strediska v danom uzle
+     */
+    public void setCenaZaVybudovanieStrediska(int cenaZaVybudovanieStrediska) {
+        this.cenaZaVybudovanieStrediska = cenaZaVybudovanieStrediska;
+    }
+     
+    
 }
