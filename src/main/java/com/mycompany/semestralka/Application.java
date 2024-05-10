@@ -347,6 +347,44 @@ public class Application {
         pMainPanel.removeAll();
     }
     
+    /**
+     * Metoda pre vypocet metody Variable Neighborhood Descent na sieti
+     */
+    public void computeVND() throws Exception {
+        if (!this.grafVytvoreny) {
+            this.convertToGraph();
+        }
+        
+        if (!this.checkNetwork()) { //Ak kontrola siete nedopadla dobre tak vyhodim chybu
+            throw new Exception("Siet nie je kompletna");
+        }
+        
+        int pocetUzlov = this.uzly.size();
+        int[][] D = new int[pocetUzlov][pocetUzlov];
+        int [] R = new int[pocetUzlov];
+        int [] C = new int[pocetUzlov];
+        this.grafSiete.GetMatrixI(pocetUzlov, pocetUzlov, R, C, D);
+        VariableNeighborhoodDescent VND = new VariableNeighborhoodDescent(D, this.getFixedCosts(), 1, pocetUzlov, (int)(pocetUzlov*0.4));// jednotkova cena je 1 a pocet povolenych stredisk je 40% zo vsetkych uzlov
+        VND.aplikujVnd(); //metoda ktora uskutocni samotne vyriesenie
+        int[] best = VND.getBest(); //nacitam si najlepsie najdene riesenie
+        
+        //TODO vyhreslit to teda treba upravit nody tak aby bolo jasne ktore su stredisko a ktore su zakaznik 
+    }
+    
+    /**
+     * Metoda pre nacitanie cien za postavenie strediska v uzloch
+     * @return pole cien za postavenie strediska v uzloch
+     */
+    private int[] getFixedCosts() {
+        int[] cenyZaPostavenieStrediska = new int[this.uzly.size()];
+        
+        for (int i = 0; i < this.uzly.size(); i++) {
+            cenyZaPostavenieStrediska[i] = this.uzly.get(i).getCenaZaVybudovanieStrediska();
+        }
+        
+        return cenyZaPostavenieStrediska;
+    }
+    
     
     //Gettre/Settre
     

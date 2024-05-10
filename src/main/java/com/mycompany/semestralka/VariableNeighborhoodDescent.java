@@ -240,6 +240,15 @@ public class VariableNeighborhoodDescent {
     }
 
     /**
+     * Getter pre najlepsie najdene riesenie
+     * @return najlepsie najdene riesenie
+     */
+    public int[] getBest() {
+        return this.best;
+    }
+       
+
+    /**
      *
      * @param sourceSol riešenie, ktoré kopírujem
      * @param ufSourceSol účelová funkcia riešenia <code>sourceSol</code>
@@ -263,7 +272,7 @@ public class VariableNeighborhoodDescent {
      * @param ufSol ucelova funkcia vstupneho riesenia
      * @return hodnota ucelovej funkcie noveho riesenia
      */
-    public int pridanieNovehoStrediska_rand(int[] sol, int ufSol) {
+    private int pridanieNovehoStrediska_rand(int[] sol, int ufSol) {
         int randomNum, zeroCount = 0;
         int pocetStredisk = this.spocitajStrediska(sol);
         
@@ -290,7 +299,7 @@ public class VariableNeighborhoodDescent {
      * @param ufSol ucelova funkcia vstupneho riesenia
      * @return hodnota ucelovej funkcie noveho riesenia
      */
-    public int pridanieNovehoStrediska_BA(int[] sol, int ufSol) {
+    private int pridanieNovehoStrediska_BA(int[] sol, int ufSol) {
         int indexBestAdd = 0;
         int dummyUF = 0;
         int minUF = Integer.MAX_VALUE;
@@ -319,7 +328,7 @@ public class VariableNeighborhoodDescent {
      * @param ufSol ucelova funkcia vstupneho riesenia
      * @return hodnota ucelovej funkcie noveho riesenia
      */
-    public int vymenaStrediska_rand(int[] sol, int ufSol) {
+    private int vymenaStrediska_rand(int[] sol, int ufSol) {
         int randomNumOut = 0;
         int randomNumIn = 0;
         int zeroCount = 0;
@@ -356,7 +365,7 @@ public class VariableNeighborhoodDescent {
      * @param ufSol ucelova funkcia vstupneho riesenia
      * @return hodnota ucelovej funkcie noveho riesenia
      */
-    public int vymenaStrediska_BA(int[] sol, int ufSol) {
+    private int vymenaStrediska_BA(int[] sol, int ufSol) {
         int indexOut = 0;
         int indexIn = 0;
         int dummyUF = 0;
@@ -396,7 +405,7 @@ public class VariableNeighborhoodDescent {
      * @param ufSol ucelova funkcia vstupneho riesenia
      * @return hodnota ucelovej funkcie noveho riesenia
      */
-    public int odobratieStrediska_rand(int[] sol, int ufSol) {
+    private int odobratieStrediska_rand(int[] sol, int ufSol) {
         int randomNum, oneCount = 0;
         int pocetStredisk = this.spocitajStrediska(sol);
         
@@ -422,7 +431,7 @@ public class VariableNeighborhoodDescent {
      * @param ufSol ucelova funkcia vstupneho riesenia
      * @return hodnota ucelovej funkcie noveho riesenia
      */
-    public int odobratieStrediska_BA(int[] sol, int ufSol) {
+    private int odobratieStrediska_BA(int[] sol, int ufSol) {
         int indexBestRemove = 0;
         int dummyUF = 0;
         int minUF = Integer.MAX_VALUE;
@@ -471,7 +480,7 @@ public class VariableNeighborhoodDescent {
      * tak, aktualizujem riešenie <code>temp</code> riešením <code>sol</code>
      * a znížim topológiu na 1, inak zvýšim topológiu o 1.
      */
-    public int changeNeighbourhoodTemp(int k, int [] sol, int ufSol) {
+    private int changeNeighbourhoodTemp(int k, int [] sol, int ufSol) {
         
         if (this.ufTemp > ufSol) {
             this.keepTemp(sol, ufSol);
@@ -500,7 +509,7 @@ public class VariableNeighborhoodDescent {
      * &nbsp&nbsp&nbsp<code>k = 5</code>&nbsp&nbsp Operacia odobratia jedneho strediska so strategiou random<br/> 
      * &nbsp&nbsp&nbsp<code>k = 5</code>&nbsp&nbsp Operacia odobratia jedneho strediska BA<br/> 
      */
-    public int getNext(int k, int [] sol, int ufSol) {
+    private int getNext(int k, int [] sol, int ufSol) {
         switch (k) { 
             case 1:
                 return this.pridanieNovehoStrediska_rand(sol, ufSol); 
@@ -530,7 +539,7 @@ public class VariableNeighborhoodDescent {
      * Začína v riešení <code>sol</code>, ktoré pozmení.<br/>
      * <strong color="red">Metóda zmení riešenie <code>temp</code>.</strong>
      */
-    public int variableNeighborhoodDescent(int kMax, int [] sol, int ufSol) {
+    private int variableNeighborhoodDescent(int kMax, int [] sol, int ufSol) {
         int k = 1; //zacinam topologiou 1
         this.ufTemp = Integer.MAX_VALUE;
         this.keepTemp(sol, ufSol);
