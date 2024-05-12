@@ -91,6 +91,7 @@ public class VariableNeighborhoodDescent {
         this.fixedCosts = fixedCosts;
         this.jednCena = jednCena;
         this.pocetVrcholov = pocetVrcholov;
+        this.p = p;
         this.best = new int [pocetVrcholov];
         this.temp = new int [pocetVrcholov];
         this.aktual = new int [pocetVrcholov];
@@ -109,6 +110,10 @@ public class VariableNeighborhoodDescent {
     private int costFunction(int [] sol) {
         int i, sum = 0;
         int min_dist = Integer.MAX_VALUE;
+        
+        if (this.spocitajStrediska(sol) == 0) { //ak nema ziadne stredisko vratim mu infinity cim ho prinutim nejake mat
+            return Integer.MAX_VALUE;
+        }
         
         //naratam fixne naklady na postavenie stredisk
         for (i = 0; i < sol.length; i++) {
@@ -140,7 +145,7 @@ public class VariableNeighborhoodDescent {
      */
     private void initBest() {
         int i;
-        for(i=0; i<=pocetVrcholov; i++) {
+        for(i=0; i<pocetVrcholov; i++) {
             best[i] = 0;
         }
         ufBest = Integer.MAX_VALUE;
@@ -152,7 +157,7 @@ public class VariableNeighborhoodDescent {
      */
     private void initTemp() {
         int i;
-        for(i=0; i<=pocetVrcholov; i++) {
+        for(i=0; i<pocetVrcholov; i++) {
             temp[i] = 0;
         }
         ufTemp = Integer.MAX_VALUE;
@@ -180,7 +185,7 @@ public class VariableNeighborhoodDescent {
      */
     private void saveBest(int [] sol, int ufSol) {
         int i;
-        for(i=0; i<=pocetVrcholov; i++) {
+        for(i=0; i<pocetVrcholov; i++) {
             best[i] = sol[i];
         }
         ufBest = ufSol;
@@ -214,7 +219,7 @@ public class VariableNeighborhoodDescent {
      */
     private void saveTemp(int [] sol, int ufSol) {
         int i;
-        for(i=0; i<=pocetVrcholov; i++) {
+        for(i=0; i<pocetVrcholov; i++) {
             temp[i] = sol[i];
         }
         ufTemp = ufSol;
@@ -260,7 +265,7 @@ public class VariableNeighborhoodDescent {
      */
     private int copySol(int [] sourceSol, int ufSourceSol, int [] destSol) {
         int i;
-        for(i = 0; i <= pocetVrcholov; i++) {
+        for(i = 0; i < pocetVrcholov; i++) {
             destSol[i] = sourceSol[i];
         }
         return ufSourceSol;
@@ -558,7 +563,7 @@ public class VariableNeighborhoodDescent {
      */
     public void aplikujVnd() {
         initAktual();
-        ufAktual = variableNeighborhoodDescent(kMax, aktual, ufAktual);
-        ufBest = copySol(aktual, ufAktual, best);        
+        ufTemp = variableNeighborhoodDescent(kMax, aktual, ufAktual);
+        ufBest = copySol(temp, ufTemp, best);        
     }
 }

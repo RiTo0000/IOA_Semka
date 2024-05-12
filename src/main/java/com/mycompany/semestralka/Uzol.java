@@ -47,12 +47,18 @@ public class Uzol extends JComponent {
      */
     private int cenaZaVybudovanieStrediska;
     
-    public Uzol(String pNazov, TypUzla pTypUzla, int pPoziadavka, int pX, int pY, int pCenaZaVybudovanieStrediska) {
+    /**
+     * Typ uzla vramci riesenia
+     */
+    private TypUzlaRiesenie typUzlaRiesenie;
+    
+    public Uzol(String pNazov, TypUzla pTypUzla, int pPoziadavka, int pX, int pY, int pCenaZaVybudovanieStrediska, TypUzlaRiesenie pTypUzlaRiesenie) {
         this.nazov = pNazov;
         this.typUzla = pTypUzla;
         this.poziadavka = pPoziadavka;
         this.hrany = new ArrayList<>();
         this.cenaZaVybudovanieStrediska = pCenaZaVybudovanieStrediska;
+        this.typUzlaRiesenie = pTypUzlaRiesenie;
         
         //potrebne pre jeho zobrazenie
         setSize(new Dimension(defaultWidth, defaultWidth));
@@ -176,6 +182,21 @@ public class Uzol extends JComponent {
     public void setCenaZaVybudovanieStrediska(int cenaZaVybudovanieStrediska) {
         this.cenaZaVybudovanieStrediska = cenaZaVybudovanieStrediska;
     }
-     
+
+    /**
+     * Getter pre typ uzla riesenia
+     * @return typ uzla riesenia
+     */
+    public TypUzlaRiesenie getTypUzlaRiesenie() {
+        return this.typUzlaRiesenie;
+    }
     
+    /**
+     * Setter pre typ uzla riesenie
+     * @param typUzlaRiesenie 
+     */
+    public void setTypUzlaRiesenie(TypUzlaRiesenie typUzlaRiesenie) {
+        this.typUzlaRiesenie = typUzlaRiesenie;
+    }
+        
 }

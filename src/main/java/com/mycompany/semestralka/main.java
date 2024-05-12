@@ -125,6 +125,7 @@ public class main extends javax.swing.JFrame {
         jMenuSiet = new javax.swing.JMenu();
         jMenuItemSietKontrola = new javax.swing.JMenuItem();
         jMenuItemSietVytvorenieGrafu = new javax.swing.JMenuItem();
+        jMenuItemSietVypocitajVND = new javax.swing.JMenuItem();
 
         jFrameNodeDetails.setAlwaysOnTop(true);
         jFrameNodeDetails.setMinimumSize(new java.awt.Dimension(400, 300));
@@ -413,6 +414,14 @@ public class main extends javax.swing.JFrame {
         });
         jMenuSiet.add(jMenuItemSietVytvorenieGrafu);
 
+        jMenuItemSietVypocitajVND.setText("Vypocitaj VND");
+        jMenuItemSietVypocitajVND.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSietVypocitajVNDActionPerformed(evt);
+            }
+        });
+        jMenuSiet.add(jMenuItemSietVypocitajVND);
+
         jMenuBarMain.add(jMenuSiet);
 
         setJMenuBar(jMenuBarMain);
@@ -565,6 +574,16 @@ public class main extends javax.swing.JFrame {
             
     }//GEN-LAST:event_jMenuItemSietKontrolaActionPerformed
 
+    private void jMenuItemSietVypocitajVNDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSietVypocitajVNDActionPerformed
+        try {
+            this.app.computeVND();
+            this.jPanelMain.repaint();
+        } catch (Exception ex) {
+            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this.jPanelMain, "Vypocet VND sa nepodaril", "Chyba", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItemSietVypocitajVNDActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -621,6 +640,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemHranyMazanie;
     private javax.swing.JMenuItem jMenuItemHranyPridavanie;
     private javax.swing.JMenuItem jMenuItemSietKontrola;
+    private javax.swing.JMenuItem jMenuItemSietVypocitajVND;
     private javax.swing.JMenuItem jMenuItemSietVytvorenieGrafu;
     private javax.swing.JMenuItem jMenuItemSuborNacitanie;
     private javax.swing.JMenuItem jMenuItemSuborUlozenie;

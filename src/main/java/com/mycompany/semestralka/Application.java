@@ -182,7 +182,7 @@ public class Application {
      */
     private Uzol addNode(int posX, int posY) {
         //Pridanie samotneho uzla s default hodnotami
-        Uzol node = new Uzol("", TypUzla.BezSpecifikacie, 0, posX, posY, 300); //defaultna cena za vybudovanie strediska v danom uzle je 300
+        Uzol node = new Uzol("", TypUzla.BezSpecifikacie, 0, posX, posY, 300, TypUzlaRiesenie.BezSpecifikacie); //defaultna cena za vybudovanie strediska v danom uzle je 300
         this.uzly.add(node);
         
         return node;
@@ -278,6 +278,7 @@ public class Application {
                     tempUzol.getX() + " " +
                     tempUzol.getY() + " " +
                     tempUzol.getCenaZaVybudovanieStrediska()+ " " +
+                    tempUzol.getTypUzlaRiesenie().convertToSave()+ " " +
                     "\"" + tempUzol.getNazov() + "\"" + "\n");
             
         }
@@ -359,16 +360,44 @@ public class Application {
             throw new Exception("Siet nie je kompletna");
         }
         
-        int pocetUzlov = this.uzly.size();
+        //spocitat zakaznikov
+        int pocetUzlov = 0;
+        for (Uzol uzol : this.uzly) {
+            if (uzol.getTypUzla() == TypUzla.Zakaznik) {
+                pocetUzlov++;
+            }
+        }
         int[][] D = new int[pocetUzlov][pocetUzlov];
         int [] R = new int[pocetUzlov];
         int [] C = new int[pocetUzlov];
+        //Naplnenie poli R a C
+        int indexRC = 0;
+        for (int i = 0; i < this.uzly.size(); i++) {
+            if (this.uzly.get(i).getTypUzla() == TypUzla.Zakaznik) { //beriem len tie ktore su nastavene ako zakaznik
+                R[indexRC] = i+1;
+                C[indexRC] = i+1; 
+                indexRC++;
+            }
+        }
         this.grafSiete.GetMatrixI(pocetUzlov, pocetUzlov, R, C, D);
-        VariableNeighborhoodDescent VND = new VariableNeighborhoodDescent(D, this.getFixedCosts(), 1, pocetUzlov, (int)(pocetUzlov*0.4));// jednotkova cena je 1 a pocet povolenych stredisk je 40% zo vsetkych uzlov
+        int maxPocetSkladov = (int)(pocetUzlov*0.4);
+        if (maxPocetSkladov < 1) {
+            maxPocetSkladov = 1;
+        }
+        VariableNeighborhoodDescent VND = new VariableNeighborhoodDescent(D, this.getFixedCosts(), 1, pocetUzlov, maxPocetSkladov);// jednotkova cena je 1 a pocet povolenych stredisk je 40% zo vsetkych uzlov
         VND.aplikujVnd(); //metoda ktora uskutocni samotne vyriesenie
         int[] best = VND.getBest(); //nacitam si najlepsie najdene riesenie
         
-        //TODO vyhreslit to teda treba upravit nody tak aby bolo jasne ktore su stredisko a ktore su zakaznik 
+        //vykreslovanie vysledku 
+        for (int i = 0; i < R.length; i++) {
+            if (best[i] == 1) {
+                this.uzly.get(R[i]-1).setTypUzlaRiesenie(TypUzlaRiesenie.Sklad);
+            }
+            else {
+                this.uzly.get(R[i]-1).setTypUzlaRiesenie(TypUzlaRiesenie.Zakaznik);
+            }
+            
+        }
     }
     
     /**

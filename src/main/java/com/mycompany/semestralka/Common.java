@@ -21,7 +21,15 @@ public class Common {
         if (node.isSelected()) {
             return Color.GREEN;
         }
-        else
-            return Color.RED;
+        else {
+            switch (node.getTypUzlaRiesenie()) {
+                case Zakaznik:
+                    return Color.ORANGE;
+                case Sklad:
+                    return Color.RED;
+                default:
+                    return Color.BLACK;
+            }
+        }
     }
 }

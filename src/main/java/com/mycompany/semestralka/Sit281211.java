@@ -122,6 +122,7 @@ public class Sit281211 {
         int cenaZaVybudovanie = 0;
         String nazovUzla = "";
         int intTypUzla = 0;
+        int intTypUzlaRiesenie = 0;
         //Hrana
         int IDPocUzol = 0;
         int IDKonUzol = 0;
@@ -142,10 +143,11 @@ public class Sit281211 {
             x = scn.nextInt(); //x suradnica uzla
             y = scn.nextInt(); //y suradnica uzla
             cenaZaVybudovanie = scn.nextInt(); //cena za vybudovanie strediska
+            intTypUzlaRiesenie = scn.nextInt();
             nazovUzla = scn.nextLine(); //nazov uzla
             nazovUzla = nazovUzla.trim();
             nazovUzla = nazovUzla.substring(1, nazovUzla.length()-1); //odstranenie uvodzoviek
-            pNodes.add(new Uzol(nazovUzla, TypUzla.convertAtLoad(intTypUzla), poziadavka, x, y, cenaZaVybudovanie));
+            pNodes.add(new Uzol(nazovUzla, TypUzla.convertAtLoad(intTypUzla), poziadavka, x, y, cenaZaVybudovanie, TypUzlaRiesenie.convertAtLoad(intTypUzlaRiesenie)));
         }
         scn.close();
         // Reading from edges.txt using Scanner
