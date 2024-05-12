@@ -32,4 +32,16 @@ public class Common {
             }
         }
     }
+    
+    /**
+     * Metoda pre nacitanie spravnej farby pre vykreslenie hrany
+     * @param edge hrana pre ktoru sa ma farba nacitat
+     * @return farba hrany pre vykreslenie
+     */
+    public static Color getEdgeColor(Hrana edge) {
+        if (edge.isHranaSucastRiesenia())
+            return Color.CYAN;
+        else
+            return Color.BLACK;
+    }
 }

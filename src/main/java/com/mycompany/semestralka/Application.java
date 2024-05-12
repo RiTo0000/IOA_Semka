@@ -206,7 +206,7 @@ public class Application {
      * @return vytvorena hrana
      */
     private Hrana addEdge() {
-        Hrana edge = new Hrana(true, this.pocUzolHrany, this.konUzolHrany, -1); //dlzku trasy davam na -1 aby sa uskutocnil automaticky vypocet
+        Hrana edge = new Hrana(true, this.pocUzolHrany, this.konUzolHrany, -1, false); //dlzku trasy davam na -1 aby sa uskutocnil automaticky vypocet
         this.hrany.add(edge);
         
         //Hranu pridam k uzlom ako incidentnu
@@ -291,7 +291,8 @@ public class Application {
             edgeWriter.write((this.uzly.indexOf(tempHrana.getPociatocnyUzol())+1) + " " +
                     (this.uzly.indexOf(tempHrana.getKoncovyUzol())+1) + " " +
                     tempHrana.getDlzkaTrasy() + " " +
-                    tempHrana.isHranaPovolena() + "\n");
+                    tempHrana.isHranaPovolena() + " " +
+                    tempHrana.isHranaSucastRiesenia() + "\n");
             
         }
         edgeWriter.close();
@@ -388,16 +389,60 @@ public class Application {
         VND.aplikujVnd(); //metoda ktora uskutocni samotne vyriesenie
         int[] best = VND.getBest(); //nacitam si najlepsie najdene riesenie
         
-        //vykreslovanie vysledku 
+        //Vykreslenie vysledku
+        this.paintResult(R, D, best);
+    }
+    
+    /**
+     * Metoda pre vypisanie vysledku VND
+     */
+    private void paintResult(int R[], int[][] D, int[] best) {
+        //vykreslovanie vysledku - uzly
         for (int i = 0; i < R.length; i++) {
             if (best[i] == 1) {
                 this.uzly.get(R[i]-1).setTypUzlaRiesenie(TypUzlaRiesenie.Sklad);
             }
             else {
                 this.uzly.get(R[i]-1).setTypUzlaRiesenie(TypUzlaRiesenie.Zakaznik);
-            }
-            
+            } 
         }
+        //vykreslovanie vysledku - hrany
+        int minLength = Integer.MAX_VALUE;
+        int indexSkladu = 0;
+        ArrayList<Integer> path;
+        Hrana edge;
+        for (int i = 0; i < R.length; i++) { //prechadzam vsetky uzly (zakaznikov)
+            if (best[i] == 0) { //0 znamena zakaznik
+                minLength = Integer.MAX_VALUE;
+                for (int j = 0; j < R.length; j++) { //hladam k nim najblizsi sklad
+                    if (best[j] == 1) { //1 znamena sklad
+                        if (minLength > D[i][j]) {
+                            indexSkladu = R[j];
+                            minLength = D[i][j];
+                        }
+                    }
+                }
+                //zaznacim cestu
+                path = this.grafSiete.GetPath(R[i], indexSkladu);
+                for (int j = 0; j < path.size()-1; j++) { // budem spracovavat 2 vrcholy naraz
+                    //ziskam trasu medzi nimi a oznacim ju
+                    edge = this.getEdgeBetween2Nodes(this.uzly.get(path.get(j)-1),
+                                                    this.uzly.get(path.get(j+1)-1));
+                    edge.setHranaSucastRiesenia(true);
+                }
+            }            
+        }
+    }
+    
+    private Hrana getEdgeBetween2Nodes(Uzol node1, Uzol node2) {
+        for (Hrana hrana1 : node1.getHrany()) {
+            for (Hrana hrana2 : node2.getHrany()) {
+                if (hrana1 == hrana2) {
+                    return hrana1;
+                }
+            }
+        }
+        return null;
     }
     
     /**

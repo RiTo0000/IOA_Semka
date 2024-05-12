@@ -128,6 +128,10 @@ public class Sit281211 {
         int IDKonUzol = 0;
         int dlzkaTrasy = 0;
         boolean hranaPovolena = false;
+        boolean hranaSucastRiesenia = false;
+        Uzol startUzol;
+        Uzol endUzol;
+        Hrana hrana;
         
         // Reading network sizes
         Scanner scn = new Scanner(new File(JmnNodes));
@@ -155,8 +159,16 @@ public class Sit281211 {
             IDPocUzol = sce.nextInt(); //ID pociatocneho uzla
             IDKonUzol = sce.nextInt(); //ID koncoveho uzla
             dlzkaTrasy = sce.nextInt(); //dlzka trasy
-            hranaPovolena = sce.nextBoolean(); //informacia o tom ci je hrana povolena alebo nie 
-            pEdges.add(new Hrana(hranaPovolena, pNodes.get(IDPocUzol-1), pNodes.get(IDKonUzol-1), dlzkaTrasy));
+            hranaPovolena = sce.nextBoolean(); //informacia o tom ci je hrana povolena alebo nie
+            hranaSucastRiesenia = sce.nextBoolean(); //informacia o tom ci je hrana sucast riesenia alebo nie
+            startUzol = pNodes.get(IDPocUzol-1);
+            endUzol = pNodes.get(IDKonUzol-1);
+            hrana = new Hrana(hranaPovolena, startUzol, endUzol, dlzkaTrasy, hranaSucastRiesenia);
+            pEdges.add(hrana);  
+            
+            //pridam si hrany k uzlom
+            startUzol.addHrana(hrana);
+            endUzol.addHrana(hrana);
         }                
         sce.close();
         
@@ -251,25 +263,31 @@ public class Sit281211 {
      * @param From Id vrchola, z ktorého hľadám najkratšiu cestu.
      * @param To Id vrchola, do ktorého hľadám najkratšiu cestu.
      * <br><br>
-     * Metóda vypíše na obrazovku najkratšiu cestu medzi vrcholmi s id 
-     * <code>From</code> a <code>To</code>. Vypíše dĺžku cesty a postupnosť 
-     * vrcholov.
+     * Metóda vrati najkratšiu cestu medzi vrcholmi s id 
+     * <code>From</code> a <code>To</code>. 
+     * @return Vrati postupnost vrcholov v ArrayListe zacinajuc v konci a konciac na zaciatku cesty.
      */
-    public void GetPath(int From, int To) {
+    public ArrayList<Integer> GetPath(int From, int To) {
         int []P = new int[this.Tnn];
         int []D = new int[this.Tnn];
         int i;
+        ArrayList<Integer> path = new ArrayList<>();
         
         GetRowI(From, P, D);
-        System.out.println("Dĺžka:"+D[To-1]);
-        System.out.print(To);
+//        System.out.println("Dĺžka:"+D[To-1]);
+//        System.out.print(To);
+        path.add(To);
         
         i = P[To-1];        
         while(P[i] != -1) {
-            System.out.print(" <- "+(i+1));
+            path.add(i+1);
+//            System.out.print(" <- "+(i+1));
             i = P[i];
         }
-        System.out.println(" <- "+From);
+        path.add(From);
+//        System.out.println(" <- "+From);
+
+        return path;
     }
     
     /**

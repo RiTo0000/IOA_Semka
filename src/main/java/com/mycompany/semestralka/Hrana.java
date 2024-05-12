@@ -38,11 +38,16 @@ public class Hrana extends JComponent {
      * Objekt ciary ktora je vykreslovana a podla ktorej sa aj rata ci na nu uzivatel klikol
      */
     private Line2D.Double lineToDraw;
+    /**
+     * True ak je hrana sucast riesenia
+     */
+    private boolean hranaSucastRiesenia;
     
-    public Hrana(boolean pHranaPovolena, Uzol pPociatocnyUzol, Uzol pKoncovyUzol, int pDlzkaTrasy) {
+    public Hrana(boolean pHranaPovolena, Uzol pPociatocnyUzol, Uzol pKoncovyUzol, int pDlzkaTrasy, boolean pHranaSucastRiesenia) {
         this.hranaPovolena = pHranaPovolena;
         this.pociatocnyUzol = pPociatocnyUzol;
         this.koncovyUzol = pKoncovyUzol;
+        this.hranaSucastRiesenia = pHranaSucastRiesenia; 
         
         if (pDlzkaTrasy == -1) { //pri vytvarani uzivatelom v aplikacii tam davame -1 aby automaticky vyratalo
             this.autoCalculateLength(); //automaticky vyratat dlzku trasy pri vytvarani hrany
@@ -71,7 +76,7 @@ public class Hrana extends JComponent {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.BLACK);
+        g2d.setColor(Common.getEdgeColor(this));
         g2d.setStroke(new BasicStroke(4f)); //sirka lajny
         g2d.draw(this.lineToDraw);
     }
@@ -164,5 +169,22 @@ public class Hrana extends JComponent {
     public Uzol getKoncovyUzol() {
         return this.koncovyUzol;
     }
-        
+
+    /**
+     * Getter pre informaciu ci je hrana sucastou riesenia
+     * @return informaciu ci je hrana sucastou riesenia
+     */
+    public boolean isHranaSucastRiesenia() {
+        return this.hranaSucastRiesenia;
+    }
+
+    /**
+     * Setter pre informaciu ci je hrana sucastou riesenia
+     * @param hranaSucastRiesenia 
+     */
+    public void setHranaSucastRiesenia(boolean hranaSucastRiesenia) {
+        this.hranaSucastRiesenia = hranaSucastRiesenia;
+    }
+       
+    
 }
