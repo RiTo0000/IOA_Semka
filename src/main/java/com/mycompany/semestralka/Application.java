@@ -400,7 +400,7 @@ public class Application {
         if (maxPocetSkladov < 1) {
             maxPocetSkladov = 1;
         }
-        VariableNeighborhoodDescent VND = new VariableNeighborhoodDescent(D, this.getFixedCosts(), 1, pocetUzlov, maxPocetSkladov);// jednotkova cena je 1 a pocet povolenych stredisk je 40% zo vsetkych uzlov
+        VariableNeighborhoodDescent VND = new VariableNeighborhoodDescent(D, this.getFixedCosts(R), 1, this.getPoziadavky(R), pocetUzlov, maxPocetSkladov);// jednotkova cena je 1 a pocet povolenych stredisk je 40% zo vsetkych uzlov
         VND.aplikujVnd(); //metoda ktora uskutocni samotne vyriesenie
         int[] best = VND.getBest(); //nacitam si najlepsie najdene riesenie
         
@@ -481,16 +481,32 @@ public class Application {
     
     /**
      * Metoda pre nacitanie cien za postavenie strediska v uzloch
+     * @param indexyZakaznikov indexy zakaznikov ktore budu v rieseni VND
      * @return pole cien za postavenie strediska v uzloch
      */
-    private int[] getFixedCosts() {
-        int[] cenyZaPostavenieStrediska = new int[this.uzly.size()];
+    private int[] getFixedCosts(int[] indexyZakaznikov) {
+        int[] cenyZaPostavenieStrediska = new int[indexyZakaznikov.length];
         
-        for (int i = 0; i < this.uzly.size(); i++) {
-            cenyZaPostavenieStrediska[i] = this.uzly.get(i).getCenaZaVybudovanieStrediska();
+        for (int i = 0; i < indexyZakaznikov.length; i++) {
+            cenyZaPostavenieStrediska[i] = this.uzly.get(indexyZakaznikov[i]-1).getCenaZaVybudovanieStrediska();
         }
         
         return cenyZaPostavenieStrediska;
+    }
+    
+    /**
+     * Metoda pre nacitanie poziadavok v uzloch
+     * @param indexyZakaznikov indexy zakaznikov ktore budu v rieseni VND
+     * @return pole poziadavok v uzloch
+     */
+    private int[] getPoziadavky(int[] indexyZakaznikov) {
+        int[] poziadavky = new int[indexyZakaznikov.length];
+        
+        for (int i = 0; i < indexyZakaznikov.length; i++) {
+            poziadavky[i] = this.uzly.get(indexyZakaznikov[i]-1).getPoziadavka();
+        }
+        
+        return poziadavky;
     }
     
     

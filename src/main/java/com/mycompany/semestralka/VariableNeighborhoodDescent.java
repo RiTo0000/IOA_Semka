@@ -75,21 +75,28 @@ public class VariableNeighborhoodDescent {
      */
     private int p;
     
+    /**
+     * Poziadavky jednotlivych uzlov
+     */
+    private int[] poziadavky;
+    
     
     /**
      * 
      * @param D matica vzdialenosti
      * @param fixedCosts fixne ceny na postavenie strediska v jednotlivych vrcholoch
      * @param jednCena jednotkova cena prepravy 
+     * @param poziadavky poziadavky jednotlivych vrcholov
      * @param pocetVrcholov pocet vrcholov
      * @param p max pocet povolenych stredisk
      */
-    public VariableNeighborhoodDescent(int[][] D, int[] fixedCosts, int jednCena, int pocetVrcholov, int p) {
+    public VariableNeighborhoodDescent(int[][] D, int[] fixedCosts, int jednCena, int[] poziadavky, int pocetVrcholov, int p) {
         this.rand = new Random();
         
         this.D = D;
         this.fixedCosts = fixedCosts;
         this.jednCena = jednCena;
+        this.poziadavky = poziadavky;
         this.pocetVrcholov = pocetVrcholov;
         this.p = p;
         this.best = new int [pocetVrcholov];
@@ -134,7 +141,7 @@ public class VariableNeighborhoodDescent {
                 }
                 
             }
-            sum += min_dist * this.jednCena;
+            sum += min_dist * this.jednCena * this.poziadavky[i];
         }
         return sum;
     }
