@@ -76,8 +76,9 @@ public class Application {
      *          2 ak treba iba repaint,
      *          3 ak treba otvorit detail Hrany a repaint,
      *          0 inak
+     * @throws java.lang.Exception
      */
-    public int mouseClicked(int posX, int posY, JPanel pMainPanel) {
+    public int mouseClicked(int posX, int posY, JPanel pMainPanel) throws Exception {
         Uzol node;
         Hrana edge;
         
@@ -87,12 +88,14 @@ public class Application {
                 pMainPanel.add(node);
                 this.setOtvorenyUzol(node);
                 this.grafVytvoreny = false;
+                this.clearResult();
                 return 1;
             case editNode:
                 try {
                     node = (Uzol)pMainPanel.getComponentAt(posX, posY);
                     this.setOtvorenyUzol(node);
                     this.grafVytvoreny = false;
+                    this.clearResult();
                     return 1;
                     
                 } catch (ClassCastException e) {
@@ -105,6 +108,7 @@ public class Application {
                     if (this.removeNode(node)) {
                         pMainPanel.remove(node);
                         this.grafVytvoreny = false;
+                        this.clearResult();
                         return 2;
                     }
                     else
@@ -123,6 +127,9 @@ public class Application {
                         return 2;
                     }
                     else if (this.konUzolHrany == null) {
+                        if (this.pocUzolHrany == node) {
+                            throw new Exception("Pociatocny a koncovy uzol nesmie byt rovnaky");
+                        }
                         this.konUzolHrany = node;
                         this.konUzolHrany.setSelected(true);
                         //vytvorit hranu
@@ -135,6 +142,7 @@ public class Application {
                         this.konUzolHrany.setSelected(false);
                         this.konUzolHrany = null;
                         this.grafVytvoreny = false;
+                        this.clearResult();
                         return 3;
                     }
                     return 0;
@@ -148,6 +156,7 @@ public class Application {
                     edge = (Hrana)pMainPanel.getComponentAt(posX, posY);
                     this.setOtvorenaHrana(edge);
                     this.grafVytvoreny = false;
+                    this.clearResult();
                     return 3;
                     
                 } catch (ClassCastException e) {
@@ -160,6 +169,7 @@ public class Application {
                     if (this.removeEdge(edge)) {
                         pMainPanel.remove(edge);
                         this.grafVytvoreny = false;
+                        this.clearResult();
                         return 2;
                     }
                     else
@@ -353,12 +363,13 @@ public class Application {
      * Metoda pre vypocet metody Variable Neighborhood Descent na sieti
      */
     public void computeVND() throws Exception {
+        this.clearResult(); //vycisti priznaky riesenia
         if (!this.grafVytvoreny) {
             this.convertToGraph();
         }
         
         if (!this.checkNetwork()) { //Ak kontrola siete nedopadla dobre tak vyhodim chybu
-            throw new Exception("Siet nie je kompletna");
+            throw new Exception("Vypocet VND nemoze byt vykonany. Siet nie je kompletna");
         }
         
         //spocitat zakaznikov
@@ -367,6 +378,10 @@ public class Application {
             if (uzol.getTypUzla() == TypUzla.Zakaznik) {
                 pocetUzlov++;
             }
+        }
+        
+        if (pocetUzlov == 0) { //nemame zakaznikov
+            throw new Exception("Vypocet VND nemoze byt vykonany. Siet neobsahuje ani jedneho zakaznika!!!");
         }
         int[][] D = new int[pocetUzlov][pocetUzlov];
         int [] R = new int[pocetUzlov];
@@ -434,6 +449,12 @@ public class Application {
         }
     }
     
+    /**
+     * Metoda pre nacitanie referencie na hranu medzi 2 uzlami
+     * @param node1 prvy uzol
+     * @param node2 druhy uzol
+     * @return referencia na hranu spajajucu tieto uzly
+     */
     private Hrana getEdgeBetween2Nodes(Uzol node1, Uzol node2) {
         for (Hrana hrana1 : node1.getHrany()) {
             for (Hrana hrana2 : node2.getHrany()) {
@@ -443,6 +464,19 @@ public class Application {
             }
         }
         return null;
+    }
+    
+    /**
+     * Metoda pre vycistenie priznakov riesenia na uzloch aj hranach
+     */
+    private void clearResult() {
+        for (Uzol uzol : this.uzly) {
+            uzol.setTypUzlaRiesenie(TypUzlaRiesenie.BezSpecifikacie);
+        }
+        
+        for (Hrana hrana : this.hrany) {
+            hrana.setHranaSucastRiesenia(false);
+        }
     }
     
     /**
@@ -500,8 +534,14 @@ public class Application {
      * @param mode novy mod aplikacie
      */
     public void setMode(Mode mode) {
-        this.pocUzolHrany = null;
-        this.konUzolHrany = null;
+        if (this.pocUzolHrany != null) {
+            this.pocUzolHrany.setSelected(false);
+            this.pocUzolHrany = null;
+        }
+        if (this.konUzolHrany != null) {
+            this.konUzolHrany.setSelected(false);
+            this.konUzolHrany = null;
+        }       
         //nastavenie samotneho modu
         this.mode = mode;
     }

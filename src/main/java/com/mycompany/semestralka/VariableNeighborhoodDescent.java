@@ -340,7 +340,7 @@ public class VariableNeighborhoodDescent {
         int oneCount = 0;
         int pocetStredisk = this.spocitajStrediska(sol);
         
-        if (pocetStredisk > 0) { //na vymenu musim mat aspon jedno stredisko postavene
+        if (pocetStredisk > 0 && sol.length > 1) { //na vymenu musim mat aspon jedno stredisko postavene a aspon 2 uzly celkovo
             
             randomNumIn = this.rand.nextInt(sol.length - pocetStredisk); //generujem si index prvku kde budem vkladat (v poradi teda ked mi da 2 tak na druhe miesto kde je nula)
             randomNumOut = this.rand.nextInt(pocetStredisk); //generujem si index prvku kde budem mazat (v poradi teda ked mi da 2 tak na druhe miesto kde je jednotka)
@@ -376,7 +376,7 @@ public class VariableNeighborhoodDescent {
         int dummyUF = 0;
         int minUF = Integer.MAX_VALUE;
         
-        if (this.spocitajStrediska(sol) > 0) { //kobntrola ci mozem este postavit dalsie stredisko
+        if (this.spocitajStrediska(sol) > 0 && sol.length > 1) { //na vymenu musim mat aspon jedno stredisko postavene a aspon 2 uzly celkovo
             for (int i = 0; i < sol.length; i++) { //prechadzam strediska kde su nuly (kandidatov na vstup do riesenia)
                 if (sol[i] == 0) {
                     for (int j = 0; j < sol.length; j++) { //a hladam k nim jednotku na vymenu (kandidatov na vystup z riesenia)

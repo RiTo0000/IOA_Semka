@@ -77,6 +77,7 @@ public class main extends javax.swing.JFrame {
     public void changeMode(Mode newMode) {
         this.app.setMode(newMode);
         this.setTitle(newMode.toString());
+        this.jPanelMain.repaint();
     }
     //End moje metody
 
@@ -126,6 +127,7 @@ public class main extends javax.swing.JFrame {
         jMenuItemSietKontrola = new javax.swing.JMenuItem();
         jMenuItemSietVytvorenieGrafu = new javax.swing.JMenuItem();
         jMenuItemSietVypocitajVND = new javax.swing.JMenuItem();
+        jMenuItemSietModPrehliadania = new javax.swing.JMenuItem();
 
         jFrameNodeDetails.setAlwaysOnTop(true);
         jFrameNodeDetails.setMinimumSize(new java.awt.Dimension(400, 300));
@@ -139,13 +141,13 @@ public class main extends javax.swing.JFrame {
 
         jLabelNodeDetailsNazov.setText("Nazov");
 
-        jTextFieldNodeDetailsNazov.setMinimumSize(new java.awt.Dimension(200, 22));
-        jTextFieldNodeDetailsNazov.setPreferredSize(new java.awt.Dimension(200, 22));
+        jTextFieldNodeDetailsNazov.setMinimumSize(new java.awt.Dimension(200, 30));
+        jTextFieldNodeDetailsNazov.setPreferredSize(new java.awt.Dimension(200, 30));
 
         jLabelNodeDetailsPoziadavka.setText("Poziadavka");
 
-        jTextFieldNodeDetailsPoziadavka.setMinimumSize(new java.awt.Dimension(200, 22));
-        jTextFieldNodeDetailsPoziadavka.setPreferredSize(new java.awt.Dimension(200, 22));
+        jTextFieldNodeDetailsPoziadavka.setMinimumSize(new java.awt.Dimension(200, 30));
+        jTextFieldNodeDetailsPoziadavka.setPreferredSize(new java.awt.Dimension(200, 30));
 
         jLabelNodeDetailsTypUzla.setText("Typ uzla");
 
@@ -155,8 +157,9 @@ public class main extends javax.swing.JFrame {
 
         jLabelNodeDetailsCenaZaVybudovanie.setText("Cena za vybudovanie strediska");
 
-        jTextFieldNodeDetailsCenaZaVybudovanie.setMinimumSize(new java.awt.Dimension(100, 22));
-        jTextFieldNodeDetailsCenaZaVybudovanie.setPreferredSize(new java.awt.Dimension(100, 22));
+        jTextFieldNodeDetailsCenaZaVybudovanie.setMinimumSize(new java.awt.Dimension(100, 30));
+        jTextFieldNodeDetailsCenaZaVybudovanie.setName(""); // NOI18N
+        jTextFieldNodeDetailsCenaZaVybudovanie.setPreferredSize(new java.awt.Dimension(100, 30));
 
         javax.swing.GroupLayout jPanelNodeDetailsLayout = new javax.swing.GroupLayout(jPanelNodeDetails);
         jPanelNodeDetails.setLayout(jPanelNodeDetailsLayout);
@@ -422,6 +425,14 @@ public class main extends javax.swing.JFrame {
         });
         jMenuSiet.add(jMenuItemSietVypocitajVND);
 
+        jMenuItemSietModPrehliadania.setText("Mod prehliadania siete");
+        jMenuItemSietModPrehliadania.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemSietModPrehliadaniaActionPerformed(evt);
+            }
+        });
+        jMenuSiet.add(jMenuItemSietModPrehliadania);
+
         jMenuBarMain.add(jMenuSiet);
 
         setJMenuBar(jMenuBarMain);
@@ -445,21 +456,25 @@ public class main extends javax.swing.JFrame {
         int posX=evt.getX();
         int posY=evt.getY();
         
-        switch (this.app.mouseClicked(posX, posY, jPanelMain)) {
-            case 1:
-                repaint();
-                this.openNodeDetailWindow(); //zobrazi uzol ktory je v this.app.otvorenyUzol
-                break;
-            case 2:
-                repaint();
-                break;
-            case 3:
-                repaint();
-                this.openEdgeDetailWindow();//zobrazi hranu ktora je v this.app.otvorenaHrana
-                break;
-            default:
-                //do nothing
-        }       
+        try {
+            switch (this.app.mouseClicked(posX, posY, jPanelMain)) {
+                case 1:
+                    repaint();
+                    this.openNodeDetailWindow(); //zobrazi uzol ktory je v this.app.otvorenyUzol
+                    break;
+                case 2:
+                    repaint();
+                    break;
+                case 3:
+                    repaint();
+                    this.openEdgeDetailWindow();//zobrazi hranu ktora je v this.app.otvorenaHrana
+                    break;
+                default:
+                    //do nothing
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this.jPanelMain, ex.getMessage(), "Chyba", JOptionPane.ERROR_MESSAGE);
+        }
         
     }//GEN-LAST:event_jPanelMainMouseClicked
 
@@ -579,10 +594,14 @@ public class main extends javax.swing.JFrame {
             this.app.computeVND();
             this.jPanelMain.repaint();
         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this.jPanelMain, ex.getMessage(), "Chyba", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this.jPanelMain, "Vypocet VND sa nepodaril", "Chyba", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItemSietVypocitajVNDActionPerformed
+
+    private void jMenuItemSietModPrehliadaniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSietModPrehliadaniaActionPerformed
+        this.changeMode(Mode.view);
+    }//GEN-LAST:event_jMenuItemSietModPrehliadaniaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -640,6 +659,7 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemHranyMazanie;
     private javax.swing.JMenuItem jMenuItemHranyPridavanie;
     private javax.swing.JMenuItem jMenuItemSietKontrola;
+    private javax.swing.JMenuItem jMenuItemSietModPrehliadania;
     private javax.swing.JMenuItem jMenuItemSietVypocitajVND;
     private javax.swing.JMenuItem jMenuItemSietVytvorenieGrafu;
     private javax.swing.JMenuItem jMenuItemSuborNacitanie;
