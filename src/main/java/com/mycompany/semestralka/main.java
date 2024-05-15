@@ -290,166 +290,166 @@ public class main extends javax.swing.JFrame {
             .addComponent(jPanelEdgeDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jFileChooserSaveLocation.setCurrentDirectory(new java.io.File("C:\\D\\Desktop\\School\\4.Rocnik\\Implementacia_optimalizacnych_algoritmov\\Semestralka\\semestralka\\files"));
-        jFileChooserSaveLocation.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
-        jFileChooserSaveLocation.setName(""); // NOI18N
+        jFileChooserSaveLocation.setCurrentDirectory(new java.io.File("C:\\"));
+            jFileChooserSaveLocation.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+            jFileChooserSaveLocation.setName(""); // NOI18N
 
-        jFileChooserOpenNodeFile.setCurrentDirectory(new java.io.File("C:\\D\\Desktop\\School\\4.Rocnik\\Implementacia_optimalizacnych_algoritmov\\Semestralka\\semestralka\\files"));
-        jFileChooserOpenNodeFile.setDialogTitle("Vyberte subor uzlov");
+            jFileChooserOpenNodeFile.setCurrentDirectory(new java.io.File("C:\\"));
+                jFileChooserOpenNodeFile.setDialogTitle("Vyberte subor uzlov");
 
-        jFileChooserOpenEdgeFile.setCurrentDirectory(new java.io.File("C:\\D\\Desktop\\School\\4.Rocnik\\Implementacia_optimalizacnych_algoritmov\\Semestralka\\semestralka\\files"));
-        jFileChooserOpenEdgeFile.setDialogTitle("Vyberte subor hran");
+                jFileChooserOpenEdgeFile.setCurrentDirectory(new java.io.File("C:\\"));
+                    jFileChooserOpenEdgeFile.setDialogTitle("Vyberte subor hran");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+                    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+                    setResizable(false);
 
-        jPanelMain.setAlignmentX(0.0F);
-        jPanelMain.setAlignmentY(10.0F);
-        jPanelMain.setPreferredSize(new java.awt.Dimension(1000, 777));
-        jPanelMain.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanelMainMouseClicked(evt);
-            }
-        });
+                    jPanelMain.setAlignmentX(0.0F);
+                    jPanelMain.setAlignmentY(10.0F);
+                    jPanelMain.setPreferredSize(new java.awt.Dimension(1000, 777));
+                    jPanelMain.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                            jPanelMainMouseClicked(evt);
+                        }
+                    });
 
-        javax.swing.GroupLayout jPanelMainLayout = new javax.swing.GroupLayout(jPanelMain);
-        jPanelMain.setLayout(jPanelMainLayout);
-        jPanelMainLayout.setHorizontalGroup(
-            jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1456, Short.MAX_VALUE)
-        );
-        jPanelMainLayout.setVerticalGroup(
-            jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 777, Short.MAX_VALUE)
-        );
+                    javax.swing.GroupLayout jPanelMainLayout = new javax.swing.GroupLayout(jPanelMain);
+                    jPanelMain.setLayout(jPanelMainLayout);
+                    jPanelMainLayout.setHorizontalGroup(
+                        jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 1456, Short.MAX_VALUE)
+                    );
+                    jPanelMainLayout.setVerticalGroup(
+                        jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 777, Short.MAX_VALUE)
+                    );
 
-        jMenuUzly.setText("Uzly");
+                    jMenuUzly.setText("Uzly");
 
-        jMenuItemUzlyPridavanie.setLabel("Pridanie uzlov");
-        jMenuItemUzlyPridavanie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemUzlyPridavanieActionPerformed(evt);
-            }
-        });
-        jMenuUzly.add(jMenuItemUzlyPridavanie);
+                    jMenuItemUzlyPridavanie.setLabel("Pridanie uzlov");
+                    jMenuItemUzlyPridavanie.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            jMenuItemUzlyPridavanieActionPerformed(evt);
+                        }
+                    });
+                    jMenuUzly.add(jMenuItemUzlyPridavanie);
 
-        jMenuItemUzlyEditacia.setLabel("Editacia Uzlov");
-        jMenuItemUzlyEditacia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemUzlyEditaciaActionPerformed(evt);
-            }
-        });
-        jMenuUzly.add(jMenuItemUzlyEditacia);
+                    jMenuItemUzlyEditacia.setLabel("Editacia Uzlov");
+                    jMenuItemUzlyEditacia.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            jMenuItemUzlyEditaciaActionPerformed(evt);
+                        }
+                    });
+                    jMenuUzly.add(jMenuItemUzlyEditacia);
 
-        jMenuItemUzlyMazanie.setLabel("Mazanie Uzlov");
-        jMenuItemUzlyMazanie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemUzlyMazanieActionPerformed(evt);
-            }
-        });
-        jMenuUzly.add(jMenuItemUzlyMazanie);
+                    jMenuItemUzlyMazanie.setLabel("Mazanie Uzlov");
+                    jMenuItemUzlyMazanie.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            jMenuItemUzlyMazanieActionPerformed(evt);
+                        }
+                    });
+                    jMenuUzly.add(jMenuItemUzlyMazanie);
 
-        jMenuBarMain.add(jMenuUzly);
+                    jMenuBarMain.add(jMenuUzly);
 
-        jMenuHrany.setText("Hrany");
+                    jMenuHrany.setText("Hrany");
 
-        jMenuItemHranyPridavanie.setText("Pridanie hran");
-        jMenuItemHranyPridavanie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemHranyPridavanieActionPerformed(evt);
-            }
-        });
-        jMenuHrany.add(jMenuItemHranyPridavanie);
+                    jMenuItemHranyPridavanie.setText("Pridanie hran");
+                    jMenuItemHranyPridavanie.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            jMenuItemHranyPridavanieActionPerformed(evt);
+                        }
+                    });
+                    jMenuHrany.add(jMenuItemHranyPridavanie);
 
-        jMenuItemHranyEditacia.setText("Editacia hran");
-        jMenuItemHranyEditacia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemHranyEditaciaActionPerformed(evt);
-            }
-        });
-        jMenuHrany.add(jMenuItemHranyEditacia);
+                    jMenuItemHranyEditacia.setText("Editacia hran");
+                    jMenuItemHranyEditacia.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            jMenuItemHranyEditaciaActionPerformed(evt);
+                        }
+                    });
+                    jMenuHrany.add(jMenuItemHranyEditacia);
 
-        jMenuItemHranyMazanie.setText("Mazanie hran");
-        jMenuItemHranyMazanie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemHranyMazanieActionPerformed(evt);
-            }
-        });
-        jMenuHrany.add(jMenuItemHranyMazanie);
+                    jMenuItemHranyMazanie.setText("Mazanie hran");
+                    jMenuItemHranyMazanie.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            jMenuItemHranyMazanieActionPerformed(evt);
+                        }
+                    });
+                    jMenuHrany.add(jMenuItemHranyMazanie);
 
-        jMenuBarMain.add(jMenuHrany);
+                    jMenuBarMain.add(jMenuHrany);
 
-        jMenuSubor.setText("Subor");
+                    jMenuSubor.setText("Subor");
 
-        jMenuItemSuborNacitanie.setText("Nacitanie dat zo suboru");
-        jMenuItemSuborNacitanie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemSuborNacitanieActionPerformed(evt);
-            }
-        });
-        jMenuSubor.add(jMenuItemSuborNacitanie);
+                    jMenuItemSuborNacitanie.setText("Nacitanie dat zo suboru");
+                    jMenuItemSuborNacitanie.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            jMenuItemSuborNacitanieActionPerformed(evt);
+                        }
+                    });
+                    jMenuSubor.add(jMenuItemSuborNacitanie);
 
-        jMenuItemSuborUlozenie.setText("Ulozenie dat do suboru");
-        jMenuItemSuborUlozenie.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemSuborUlozenieActionPerformed(evt);
-            }
-        });
-        jMenuSubor.add(jMenuItemSuborUlozenie);
+                    jMenuItemSuborUlozenie.setText("Ulozenie dat do suboru");
+                    jMenuItemSuborUlozenie.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            jMenuItemSuborUlozenieActionPerformed(evt);
+                        }
+                    });
+                    jMenuSubor.add(jMenuItemSuborUlozenie);
 
-        jMenuBarMain.add(jMenuSubor);
+                    jMenuBarMain.add(jMenuSubor);
 
-        jMenuSiet.setText("Siet");
+                    jMenuSiet.setText("Siet");
 
-        jMenuItemSietKontrola.setText("Kontrola siete");
-        jMenuItemSietKontrola.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemSietKontrolaActionPerformed(evt);
-            }
-        });
-        jMenuSiet.add(jMenuItemSietKontrola);
+                    jMenuItemSietKontrola.setText("Kontrola siete");
+                    jMenuItemSietKontrola.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            jMenuItemSietKontrolaActionPerformed(evt);
+                        }
+                    });
+                    jMenuSiet.add(jMenuItemSietKontrola);
 
-        jMenuItemSietVytvorenieGrafu.setText("Vytvorenie grafu");
-        jMenuItemSietVytvorenieGrafu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemSietVytvorenieGrafuActionPerformed(evt);
-            }
-        });
-        jMenuSiet.add(jMenuItemSietVytvorenieGrafu);
+                    jMenuItemSietVytvorenieGrafu.setText("Vytvorenie grafu");
+                    jMenuItemSietVytvorenieGrafu.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            jMenuItemSietVytvorenieGrafuActionPerformed(evt);
+                        }
+                    });
+                    jMenuSiet.add(jMenuItemSietVytvorenieGrafu);
 
-        jMenuItemSietVypocitajVND.setText("Vypocitaj VND");
-        jMenuItemSietVypocitajVND.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemSietVypocitajVNDActionPerformed(evt);
-            }
-        });
-        jMenuSiet.add(jMenuItemSietVypocitajVND);
+                    jMenuItemSietVypocitajVND.setText("Vypocitaj VND");
+                    jMenuItemSietVypocitajVND.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            jMenuItemSietVypocitajVNDActionPerformed(evt);
+                        }
+                    });
+                    jMenuSiet.add(jMenuItemSietVypocitajVND);
 
-        jMenuItemSietModPrehliadania.setText("Mod prehliadania siete");
-        jMenuItemSietModPrehliadania.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemSietModPrehliadaniaActionPerformed(evt);
-            }
-        });
-        jMenuSiet.add(jMenuItemSietModPrehliadania);
+                    jMenuItemSietModPrehliadania.setText("Mod prehliadania siete");
+                    jMenuItemSietModPrehliadania.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            jMenuItemSietModPrehliadaniaActionPerformed(evt);
+                        }
+                    });
+                    jMenuSiet.add(jMenuItemSietModPrehliadania);
 
-        jMenuBarMain.add(jMenuSiet);
+                    jMenuBarMain.add(jMenuSiet);
 
-        setJMenuBar(jMenuBarMain);
+                    setJMenuBar(jMenuBarMain);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, 1456, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+                    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                    getContentPane().setLayout(layout);
+                    layout.setHorizontalGroup(
+                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, 1456, Short.MAX_VALUE)
+                    );
+                    layout.setVerticalGroup(
+                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanelMain, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    );
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+                    pack();
+                }// </editor-fold>//GEN-END:initComponents
 
     private void jPanelMainMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelMainMouseClicked
         //mouse on click listener
@@ -541,15 +541,16 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEdgeDetailsAutomatickyVypocetDlzkyTrasyActionPerformed
 
     private void jMenuItemSuborUlozenieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSuborUlozenieActionPerformed
-        this.jFileChooserSaveLocation.showSaveDialog(this);
-        try {
-            if (this.jFileChooserSaveLocation.getSelectedFile().isDirectory()) {
-                this.app.saveData(this.jFileChooserSaveLocation.getSelectedFile().getPath());
-                JOptionPane.showMessageDialog(this.jPanelMain, "Uloženie dát sa podarilo");
+        if (this.jFileChooserSaveLocation.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            try {
+                if (this.jFileChooserSaveLocation.getSelectedFile().isDirectory()) {
+                    this.app.saveData(this.jFileChooserSaveLocation.getSelectedFile().getPath());
+                    JOptionPane.showMessageDialog(this.jPanelMain, "Uloženie dát sa podarilo");
+                }
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this.jPanelMain, "Pri ukladaní dát nastala chyba", "Chyba", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this.jPanelMain, "Pri ukladaní dát nastala chyba", "Chyba", JOptionPane.ERROR_MESSAGE);
-            Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItemSuborUlozenieActionPerformed
 
